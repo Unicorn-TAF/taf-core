@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Unicorn.Taf.Api\Unicorn.Taf.Api.csproj" />
+    <PackageReference Include="Unicorn.Taf.Api" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
