@@ -23,11 +23,12 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/Unicorn.Taf.Core/Unicorn.Taf.Core.csproj
+        run: dotnet restore ./src/Unicorn.UnitTests/Unicorn.UnitTests.csproj
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./src/Unicorn.Taf.Core/Unicorn.Taf.Core.csproj 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+        run: dotnet test ./src/Unicorn.UnitTests/Unicorn.UnitTests.csproj --framework net5.0 --verbosity normal --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
         - name: Upload dotnet test results
           uses: actions/upload-artifact@v3
           with:
