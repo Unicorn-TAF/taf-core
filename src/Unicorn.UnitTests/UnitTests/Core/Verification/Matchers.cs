@@ -98,14 +98,14 @@ namespace Unicorn.UnitTests.Core.Verification
         public void TestMatcherIsEqualToNullNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate 
             {
-                Uv.Assert.That(null, Um.Is.EqualTo("23"));
+                Uv.Assert.That((string)null, Um.Is.EqualTo("23"));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToNullWithNotNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate 
             {
-                Uv.Assert.That(null, Um.Is.Not(Um.Is.EqualTo("23")));
+                Uv.Assert.That((string)null, Um.Is.Not(Um.Is.EqualTo("23")));
             });
 
         #endregion

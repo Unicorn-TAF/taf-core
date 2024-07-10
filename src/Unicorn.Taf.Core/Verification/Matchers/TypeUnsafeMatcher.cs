@@ -1,4 +1,6 @@
-﻿namespace Unicorn.Taf.Core.Verification.Matchers
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+namespace Unicorn.Taf.Core.Verification.Matchers
 {
     /// <summary>
     /// Base matcher for objects without type parameterization.

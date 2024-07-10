@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -184,6 +186,13 @@ namespace Unicorn.Taf.Core
             {
                 throw new FileNotFoundException("Unicorn configuration file not found.", configPath);
             }
+
+            // avoiding Path Traversal vulnerability
+            if (configPath.Contains(":") || configPath.Contains(@"..\"))
+            {
+                return;
+            }
+
 
             JsonConfig conf;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -6,6 +8,7 @@ using System.Text;
 using System.Xml;
 using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Internal;
+using Unicorn.Taf.Core.Logging;
 using Unicorn.Taf.Core.Testing;
 
 namespace Unicorn.Taf.Core.Utility
@@ -111,7 +114,7 @@ namespace Unicorn.Taf.Core.Utility
             }
             catch (Exception e)
             {
-                Console.WriteLine("TRX test results file generation failed. " + e);
+                Console.WriteLine("TRX test results file generation failed: {0} - {1}", e.GetType().Name, e.Message);
             }
         }
 
@@ -327,10 +330,11 @@ namespace Unicorn.Taf.Core.Utility
                 case Status.Skipped:
                     outcomeAttribute.Value = "Inconclusive";
                     break;
+                default:
+                    break;
             }
 
             unitTestResult.Attributes.Append(outcomeAttribute);
-
 
             var testListId = _trx.CreateAttribute("testListId");
             testListId.Value = outcome.ParentId.ToString();

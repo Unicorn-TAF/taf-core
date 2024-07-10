@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Unicorn.Taf.Core.Logging;
