@@ -136,6 +136,14 @@ namespace Unicorn.Taf.Core.Testing
             var test = dataSet == null ? new Test(method) : new Test(method, dataSet);
 
             test.MethodType = SuiteMethodType.Test;
+
+            TestCaseIdAttribute attribute = method.GetCustomAttribute<TestCaseIdAttribute>(true);
+
+            if (attribute != null)
+            {
+                test.Outcome.TestCaseId = attribute.Id;
+            }
+
             return test;
         }
 

@@ -34,6 +34,7 @@ namespace Unicorn.UnitTests.Suites
         public void TestToSkip() =>
             Output += "TestToSkip>";
 
+        [TestCaseId("TC1")]
         [Test]
         public void Test1()
         {

@@ -28,14 +28,19 @@ namespace Unicorn.Taf.Core.Testing
         }
 
         /// <summary>
-        /// Gets or sets unique across test assembly test ID.
+        /// Gets or sets <see cref="Guid"/> of test (unique across test assembly).
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets unique across test assembly suite ID.
+        /// Gets or sets parent suite <see cref="Guid"/> (unique across test assembly).
         /// </summary>
         public Guid ParentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ID of tied test case.
+        /// </summary>
+        public string TestCaseId { get; set; }
 
         /// <summary>
         /// Gets or sets test title.
