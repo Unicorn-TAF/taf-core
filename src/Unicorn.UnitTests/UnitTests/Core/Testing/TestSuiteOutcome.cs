@@ -16,6 +16,8 @@ namespace Unicorn.UnitTests.Core.Testing
         private static TestsRunner runner;
         private static TimeSpan runTime;
 
+        private static SuiteOutcome Outcome => runner.Outcome.SuitesOutcomes[0];
+
         [OneTimeSetUp]
         public static void SetUp()
         {
@@ -39,25 +41,33 @@ namespace Unicorn.UnitTests.Core.Testing
         [Test(Description = "Check Author attribute")]
         public void TestAuthorAttribute()
         {
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes.First(o => o.Title.Equals("Test1")).Author, Is.EqualTo("No author"));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes.First(o => o.Title.Equals("Test2")).Author, Is.EqualTo("Author2"));
+            Assert.That(Outcome.TestsOutcomes.First(o => o.Title.Equals("Test1")).Author, Is.EqualTo("No author"));
+            Assert.That(Outcome.TestsOutcomes.First(o => o.Title.Equals("Test2")).Author, Is.EqualTo("Author2"));
+        }
+
+        [Author("Vitaliy Dobriyan")]
+        [Test(Description = "Check TestCaseId attribute")]
+        public void TestCaseIdAttribute()
+        {
+            Assert.That(Outcome.TestsOutcomes.First(o => o.Title.Equals("Test1")).TestCaseId, Is.EqualTo("TC1"));
+            Assert.That(Outcome.TestsOutcomes.First(o => o.Title.Equals("Test2")).TestCaseId, Is.Null);
         }
 
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Check suite outcome TotalTests counter")]
         public void TestSuiteOutcomeTotalTestsCounter() =>
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TotalTests, Is.EqualTo(3));
+            Assert.That(Outcome.TotalTests, Is.EqualTo(3));
 
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Check suite outcome ExecutionTime")]
         public void TestSuiteOutcomeExecutionTime()
         {
-            Assert.That(runner.Outcome.SuitesOutcomes[0].ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].ExecutionTime, Is.Not.GreaterThan(runTime));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[0].ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[0].ExecutionTime, Is.Not.GreaterThan(runTime));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[1].ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[1].ExecutionTime, Is.Not.GreaterThan(runTime));
+            Assert.That(Outcome.ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(Outcome.ExecutionTime, Is.Not.GreaterThan(runTime));
+            Assert.That(Outcome.TestsOutcomes[0].ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(Outcome.TestsOutcomes[0].ExecutionTime, Is.Not.GreaterThan(runTime));
+            Assert.That(Outcome.TestsOutcomes[1].ExecutionTime, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(Outcome.TestsOutcomes[1].ExecutionTime, Is.Not.GreaterThan(runTime));
         }
     }
 }
