@@ -31,7 +31,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
         /// <returns>true - if actual object is equal to expected one; otherwise - false</returns>
         public override bool Matches(T actual)
         {
-            if (actual == null)
+            if (typeof(T).IsClass && Equals(actual, default(T)))
             {
                 DescribeMismatch("null");
                 return Reverse;

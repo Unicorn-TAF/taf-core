@@ -96,9 +96,9 @@ namespace Unicorn.UnitTests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToNullNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That((string)null, Um.Is.EqualTo("23"));
+                Uv.Assert.That(null, Um.Is.EqualTo((SampleObject)null));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
