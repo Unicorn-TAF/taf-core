@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>Unicorn.Taf.Core</id>
-    <version>3.2.0</version>
+    <version>$version$</version>
     <title>Unicorn.Taf.Core</title>
     <authors>Vitaliy Dobriyan</authors>
     <license type="expression">Apache-2.0</license>
-    <copyright>Copyright (c) Vitaliy Dobriyan 2022</copyright>
-    <projectUrl>https://dobriyanchik.bitbucket.io/unicorn/home.html</projectUrl>
-    <repository type="git" url="https://bitbucket.org/dobriyanchik/unicorntaf"/>
+    <copyright>Copyright (c) Vitaliy Dobriyan 2024</copyright>
+    <projectUrl>https://unicorn-taf.github.io</projectUrl>
+    <repository type="git" url="https://github.com/Unicorn-TAF/taf-core"/>
     <icon>images\icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
@@ -17,7 +17,7 @@
       This package includes core of unicorn automation framework, which is referenced by your tests. You will need to install nuget test adapter or console runner to run your tests.
     </description>
     <releaseNotes>New framework logger, isolated test events calls, extended BugAttribute, non-serializable TestOutcome.Exception.</releaseNotes>
-    <tags>automation tests steps verification matchers unicorntaf</tags>
+    <tags>unicorn-taf automation tests steps verification matchers</tags>
     <dependencies>
       <group targetFramework="net452">
         <dependency id="Unicorn.Taf.Api" version="1.0.0"/>
