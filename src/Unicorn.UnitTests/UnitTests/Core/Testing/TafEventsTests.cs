@@ -41,20 +41,20 @@ namespace Unicorn.UnitTests.Core.Testing
             Config.TestsExecutionOrder = TestsOrder.Alphabetical;
             Config.SetSuiteTags(Tag.TafEvents);
 
-            TestSuite.OnSuiteStart += SuiteStartEvent;
-            TestSuite.OnSuiteFinish += SuiteFinishEvent;
-            TestSuite.OnSuiteSkip += SuiteSkipEvent;
+            TafEvents.OnSuiteStart += SuiteStartEvent;
+            TafEvents.OnSuiteFinish += SuiteFinishEvent;
+            TafEvents.OnSuiteSkip += SuiteSkipEvent;
 
-            SuiteMethod.OnSuiteMethodStart += SuiteMethodStartEvent;
-            SuiteMethod.OnSuiteMethodFinish += SuiteMethodFinishEvent;
-            SuiteMethod.OnSuiteMethodPass += SuiteMethodPassEvent;
-            SuiteMethod.OnSuiteMethodFail += SuiteMethodFailEvent;
+            TafEvents.OnSuiteMethodStart += SuiteMethodStartEvent;
+            TafEvents.OnSuiteMethodFinish += SuiteMethodFinishEvent;
+            TafEvents.OnSuiteMethodPass += SuiteMethodPassEvent;
+            TafEvents.OnSuiteMethodFail += SuiteMethodFailEvent;
 
-            Test.OnTestStart += TestStartEvent;
-            Test.OnTestFinish += TestFinishEvent;
-            Test.OnTestPass += TestPassEvent;
-            Test.OnTestFail += TestFailEvent;
-            Test.OnTestSkip += TestSkipEvent;
+            TafEvents.OnTestStart += TestStartEvent;
+            TafEvents.OnTestFinish += TestFinishEvent;
+            TafEvents.OnTestPass += TestPassEvent;
+            TafEvents.OnTestFail += TestFailEvent;
+            TafEvents.OnTestSkip += TestSkipEvent;
         }
 
         [OneTimeTearDown]
@@ -63,20 +63,20 @@ namespace Unicorn.UnitTests.Core.Testing
             Config.Reset();
             USuiteForTafEvents.Output.Clear();
 
-            TestSuite.OnSuiteStart -= SuiteStartEvent;
-            TestSuite.OnSuiteFinish -= SuiteFinishEvent;
-            TestSuite.OnSuiteSkip -= SuiteSkipEvent;
+            TafEvents.OnSuiteStart -= SuiteStartEvent;
+            TafEvents.OnSuiteFinish -= SuiteFinishEvent;
+            TafEvents.OnSuiteSkip -= SuiteSkipEvent;
 
-            SuiteMethod.OnSuiteMethodStart -= SuiteMethodStartEvent;
-            SuiteMethod.OnSuiteMethodFinish -= SuiteMethodFinishEvent;
-            SuiteMethod.OnSuiteMethodPass -= SuiteMethodPassEvent;
-            SuiteMethod.OnSuiteMethodFail -= SuiteMethodFailEvent;
+            TafEvents.OnSuiteMethodStart -= SuiteMethodStartEvent;
+            TafEvents.OnSuiteMethodFinish -= SuiteMethodFinishEvent;
+            TafEvents.OnSuiteMethodPass -= SuiteMethodPassEvent;
+            TafEvents.OnSuiteMethodFail -= SuiteMethodFailEvent;
 
-            Test.OnTestStart -= TestStartEvent;
-            Test.OnTestFinish -= TestFinishEvent;
-            Test.OnTestPass -= TestPassEvent;
-            Test.OnTestFail -= TestFailEvent;
-            Test.OnTestSkip -= TestSkipEvent;
+            TafEvents.OnTestStart -= TestStartEvent;
+            TafEvents.OnTestFinish -= TestFinishEvent;
+            TafEvents.OnTestPass -= TestPassEvent;
+            TafEvents.OnTestFail -= TestFailEvent;
+            TafEvents.OnTestSkip -= TestSkipEvent;
         }
 
         [Author("Vitaliy Dobriyan")]
