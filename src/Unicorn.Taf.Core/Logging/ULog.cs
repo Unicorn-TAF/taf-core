@@ -1,12 +1,15 @@
-﻿namespace Unicorn.Taf.Core.Logging
+﻿using Unicorn.Taf.Api;
+
+namespace Unicorn.Taf.Core.Logging
 {
     /// <summary>
     /// Main framework logger.
+    /// Defaults: level - Debug, output - console.
     /// </summary>
     public static class ULog
     {
         private static LogLevel Level = LogLevel.Debug;
-        private static Api.ILogger Instance = null;
+        private static ILogger Instance = new DefaultConsoleLogger();
 
         /// <summary>
         /// Sets active logger implementation.
@@ -19,11 +22,8 @@
         /// Sets minimum log level. All records with level lower than current will not appear in logs.
         /// </summary>
         /// <param name="level">verbosity level</param>
-        public static void SetLevel(LogLevel level)
-        {
+        public static void SetLevel(LogLevel level) =>
             Level = level;
-            Logger.Level = level;
-        }
 
         /// <summary>
         /// Logs message with error level.
@@ -32,14 +32,7 @@
         /// <param name="parameters">parameters to substitute to message template</param>
         public static void Error(string message, params object[] parameters)
         {
-            if (Instance is null)
-            {
-                Logger.Instance.Log(LogLevel.Error, string.Format(message, parameters));
-            }
-            else
-            {
-                Instance.Error(message, parameters);
-            }
+            Instance.Error(message, parameters);
         }
 
         /// <summary>
@@ -49,19 +42,11 @@
         /// <param name="parameters">parameters to substitute to message template</param>
         public static void Warn(string message, params object[] parameters)
         {
-            if (Level < LogLevel.Warning)
-            {
-                return;
-            }
-
-            if (Instance is null)
-            {
-                Logger.Instance.Log(LogLevel.Warning, string.Format(message, parameters));
-            }
-            else
+            if (Level >= LogLevel.Warning)
             {
                 Instance.Warn(message, parameters);
             }
+                
         }
 
         /// <summary>
@@ -71,16 +56,7 @@
         /// <param name="parameters">parameters to substitute to message template</param>
         public static void Info(string message, params object[] parameters)
         {
-            if (Level < LogLevel.Info)
-            {
-                return;
-            }
-
-            if (Instance is null)
-            {
-                Logger.Instance.Log(LogLevel.Info, string.Format(message, parameters));
-            }
-            else
+            if (Level >= LogLevel.Info)
             {
                 Instance.Info(message, parameters);
             }
@@ -93,16 +69,7 @@
         /// <param name="parameters">parameters to substitute to message template</param>
         public static void Debug(string message, params object[] parameters)
         {
-            if (Level < LogLevel.Debug)
-            {
-                return;
-            }
-
-            if (Instance is null)
-            {
-                Logger.Instance.Log(LogLevel.Debug, string.Format(message, parameters));
-            }
-            else
+            if (Level >= LogLevel.Debug)
             {
                 Instance.Debug(message, parameters);
             }
@@ -115,16 +82,7 @@
         /// <param name="parameters">parameters to substitute to message template</param>
         public static void Trace(string message, params object[] parameters)
         {
-            if (Level < LogLevel.Trace)
-            {
-                return;
-            }
-
-            if (Instance is null)
-            {
-                Logger.Instance.Log(LogLevel.Trace, string.Format(message, parameters));
-            }
-            else
+            if (Level >= LogLevel.Trace)
             {
                 Instance.Trace(message, parameters);
             }

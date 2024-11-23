@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
 using System.Reflection;
-using Unicorn.Taf.Core.Logging;
 
 #pragma warning disable S2187 // TestCases should contain tests
 namespace Unicorn.UnitTests.Util
@@ -16,12 +15,6 @@ namespace Unicorn.UnitTests.Util
          * so need to explicitly point to the folder
         */ 
         protected static string ConfigName { get; } = Path.Combine(DllFolder, "config.conf");
-
-        [OneTimeSetUp]
-        public static void ClassInit()
-        {
-            Logger.Instance = new TestContextLogger();
-        }
     }
 }
 #pragma warning restore S2187 // TestCases should contain tests
