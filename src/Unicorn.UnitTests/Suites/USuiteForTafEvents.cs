@@ -13,7 +13,7 @@ namespace Unicorn.UnitTests.Suites
 
     [Suite("Suite for TAF events")]
     [Tag(Tag.TafEvents)]
-    public class USuiteForTafEvents : TestSuite
+    public class USuiteForTafEvents
     {
         internal static TafEventsSuiteMode RunMode { get; set; } = TafEventsSuiteMode.RunAll;
 

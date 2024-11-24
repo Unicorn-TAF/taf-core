@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using Unicorn.Taf.Core;
@@ -8,7 +7,7 @@ using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Suites;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture]
     public class ParameterizedTests : NUnitTestRunner
@@ -39,7 +38,7 @@ namespace Unicorn.UnitTests.Core.Testing
         [Test(Description = "Check that test suite determines correct count of tests inside")]
         public void TestParameterizedSuiteCountOfTests()
         {
-            var suite = Activator.CreateInstance<USuiteWithParameterizedTests>();
+            TestSuite suite = new TestSuite(new USuiteWithParameterizedTests());
 
             Test[] actualTests = typeof(Taf.Core.Testing.TestSuite)
                 .GetField("_tests", BindingFlags.NonPublic | BindingFlags.Instance)

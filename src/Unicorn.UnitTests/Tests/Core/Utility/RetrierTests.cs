@@ -3,7 +3,7 @@ using System;
 using Unicorn.Taf.Core.Utility;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Utility
+namespace Unicorn.UnitTests.Tests.Core.Utility
 {
     [TestFixture]
     public class RetrierTests : NUnitTestRunner

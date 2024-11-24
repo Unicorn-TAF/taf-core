@@ -132,16 +132,16 @@ namespace Unicorn.Taf.Core.Testing
             TafEvents.ExecuteTestEvent(OnTestSkip, this, nameof(OnTestSkip));
         }
 
-        private void RunTestMethod(TestSuite suiteInstance)
+        private void RunTestMethod(TestSuite testSuite)
         {
             try
             {
                 var testTask = Task.Run(() => 
                 {
-                    TestMethod.Invoke(suiteInstance, _dataSet?.Parameters.ToArray());
+                    TestMethod.Invoke(testSuite.SuiteInstance, _dataSet?.Parameters.ToArray());
                 });
 
-                var restSuiteExecutionTime = Config.SuiteTimeout - suiteInstance.ExecutionTimer.Elapsed;
+                var restSuiteExecutionTime = Config.SuiteTimeout - testSuite.ExecutionTimer.Elapsed;
 
                 if (restSuiteExecutionTime < TimeSpan.Zero)
                 {

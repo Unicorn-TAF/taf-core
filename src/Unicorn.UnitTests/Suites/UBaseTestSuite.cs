@@ -1,10 +1,9 @@
 ﻿using System;
-using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Steps;
 
 namespace Unicorn.UnitTests.Suites
 {
-    public class UBaseTestSuite : TestSuite
+    public class UBaseTestSuite
     {
         private readonly Lazy<AllSteps> steps = new Lazy<AllSteps>();
 

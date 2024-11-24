@@ -5,7 +5,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite for tests order attribute")]
     [Tag(Tag.TestsOrderAttribute)]
-    public class USuiteForTestsOrderAttribute : TestSuite
+    public class USuiteForTestsOrderAttribute
     {
         [Test]
         public void Test7() => GetValue("Test5");

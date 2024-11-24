@@ -18,6 +18,7 @@ namespace Unicorn.Taf.Core.Testing
     /// </summary>
     public class TestSuite
     {
+        private readonly object _suiteInstance;
         private readonly Test[] _tests;
         private readonly SuiteMethod[] _beforeSuites;
         private readonly SuiteMethod[] _beforeTests;
@@ -33,11 +34,13 @@ namespace Unicorn.Taf.Core.Testing
         /// is retrieved from the instance.<br/>
         /// For each test is performed check for skip
         /// </summary>
-        public TestSuite()
+        public TestSuite(object suiteInstance)
         {
+            _suiteInstance = suiteInstance;
+            Type suiteType = suiteInstance.GetType();
             Metadata = new Dictionary<string, string>();
 
-            foreach (var attribute in GetType().GetCustomAttributes<MetadataAttribute>(true))
+            foreach (var attribute in suiteType.GetCustomAttributes<MetadataAttribute>(true))
             {
                 if (!Metadata.ContainsKey(attribute.Key))
                 {
@@ -45,11 +48,11 @@ namespace Unicorn.Taf.Core.Testing
                 }
             }
 
-            var suiteAttribute = GetType().GetCustomAttribute<SuiteAttribute>(true);
+            var suiteAttribute = suiteType.GetCustomAttribute<SuiteAttribute>(true);
 
             Outcome = new SuiteOutcome
             {
-                Name = suiteAttribute != null ? suiteAttribute.Name : GetType().Name.Split('.').Last(),
+                Name = string.IsNullOrEmpty(suiteAttribute.Name) ? suiteType.Name : suiteAttribute.Name,
                 Result = Status.NotExecuted
             };
 
@@ -96,7 +99,7 @@ namespace Unicorn.Taf.Core.Testing
             {
                 if (tags == null)
                 {
-                    var attributes = GetType().GetCustomAttributes<TagAttribute>(true);
+                    var attributes = _suiteInstance.GetType().GetCustomAttributes<TagAttribute>(true);
                     tags = new HashSet<string>(from attribute in attributes select attribute.Tag.ToUpper());
                 }
 
@@ -120,6 +123,8 @@ namespace Unicorn.Taf.Core.Testing
         public SuiteOutcome Outcome { get; protected set; }
 
         internal Stopwatch ExecutionTimer { get; private set; }
+
+        internal object SuiteInstance => _suiteInstance;
 
         internal void Execute()
         {
@@ -277,7 +282,7 @@ namespace Unicorn.Taf.Core.Testing
         private void GenerateIds()
         {
             // (type name + data set name) is unique int terms of assembly.
-            Outcome.Id = GuidGenerator.FromString(GetType().Name + Outcome.DataSetName);
+            Outcome.Id = GuidGenerator.FromString(_suiteInstance.GetType().Name + Outcome.DataSetName);
 
             Array.ForEach(_beforeSuites,
                 beforeSuite => SuiteUtilities.GenerateSuiteMethodIds(beforeSuite, Outcome.Id));

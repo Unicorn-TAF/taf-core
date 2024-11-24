@@ -5,7 +5,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite with dependencies")]
     [Tag(Tag.Dependencies)]
-    public class USuiteWithDependencies : TestSuite
+    public class USuiteWithDependencies
     {
         public static string Output { get; set; }
 

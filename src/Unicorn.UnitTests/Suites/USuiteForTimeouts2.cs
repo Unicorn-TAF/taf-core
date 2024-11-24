@@ -6,7 +6,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite for timeouts 2")]
     [Tag(Tag.Timeouts)]
-    public class USuiteForTimeouts2 : TestSuite
+    public class USuiteForTimeouts2
     {
         [BeforeSuite]
         public void BeforeSuite() =>

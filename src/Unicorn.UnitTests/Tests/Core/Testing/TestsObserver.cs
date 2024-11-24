@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture]
     public class TestsObserver

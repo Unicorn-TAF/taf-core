@@ -7,7 +7,7 @@ namespace Unicorn.UnitTests.Suites
     [Tag(Tag.Sample)]
     [Metadata("key1", "value1")]
     [Metadata("key2", "value2")]
-    public class USuite : TestSuite
+    public class USuite
     {
         public static string Output { get; set; }
 

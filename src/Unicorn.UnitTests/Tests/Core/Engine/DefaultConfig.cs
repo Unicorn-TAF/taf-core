@@ -5,7 +5,7 @@ using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Engine
+namespace Unicorn.UnitTests.Tests.Core.Engine
 {
     [TestFixture(false)]
     [TestFixture(true)]

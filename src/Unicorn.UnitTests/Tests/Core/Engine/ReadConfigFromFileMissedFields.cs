@@ -8,15 +8,13 @@ using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Engine
+namespace Unicorn.UnitTests.Tests.Core.Engine
 {
     [TestFixture]
-    public class ReadConfigFromFile : NUnitTestRunner
+    public class ReadConfigFromFileMissedFields : NUnitTestRunner
     {
-        private const string ConfigContent = @"{""parallel"": ""none"",""threads"": 3,""testTimeout"": " +
-            @"25,""suiteTimeout"": 55,""testsDependency"":""donotrun"", ""testsOrder"": ""Declaration""," +
-            @"""tags"": [ ""feature1"", ""feature1"" ],""categories"": [ ""category"" ],""tests"": [ ]," +
-            @"""userDefined"": {""customSetting1"": ""customValue1"", ""customSetting3"": ""customValue3""} }";
+        private const string ConfigContent = @"{""testsDependency"":""donotrun""," +
+            @"""tags"": [ ""feature1"", ""feature1"" ],""categories"": [ ""category"" ]}";
 
         private static TestsRunner runner;
 
@@ -60,17 +58,17 @@ namespace Unicorn.UnitTests.Core.Engine
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Test config test timeout")]
         public void TestConfigTestTimeout() =>
-            Assert.That(Config.TestTimeout, Is.EqualTo(TimeSpan.FromMinutes(25)));
+            Assert.That(Config.TestTimeout, Is.EqualTo(TimeSpan.FromMinutes(15)));
 
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Test config suite timeout")]
         public void TestConfigSuiteTimeout() =>
-            Assert.That(Config.SuiteTimeout, Is.EqualTo(TimeSpan.FromMinutes(55)));
+            Assert.That(Config.SuiteTimeout, Is.EqualTo(TimeSpan.FromMinutes(40)));
 
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Test config threads")]
         public void TestConfigThreads() =>
-            Assert.That(Config.Threads, Is.EqualTo(3));
+            Assert.That(Config.Threads, Is.EqualTo(1));
 
         [Author("Vitaliy Dobriyan")]
         [Test(Description = "Test config parallel")]
@@ -88,19 +86,11 @@ namespace Unicorn.UnitTests.Core.Engine
             Assert.That(Config.TestsExecutionOrder, Is.EqualTo(TestsOrder.Declaration));
 
         [Author("Vitaliy Dobriyan")]
-        [Test(Description = "Test config get existing custom setting")]
-        public void TestConfigGetExistingCustomSetting()
-        {
-            Assert.That(Config.GetUserDefinedSetting("customSetting1"), Is.EqualTo("customValue1"));
-            Assert.That(Config.GetUserDefinedSetting("customSetting3"), Is.EqualTo("customValue3"));
-        }
-
-        [Author("Vitaliy Dobriyan")]
-        [Test(Description = "Test config get not existing custom setting")]
-        public void TestConfigGetNotExistingCustomSetting() =>
+        [Test(Description = "Test config get custom setting")]
+        public void TestConfigGetCustomSetting() =>
             Assert.Throws<KeyNotFoundException>(delegate
             {
-                Config.GetUserDefinedSetting("customSetting2");
+                Config.GetUserDefinedSetting("customSetting");
             });
     }
 }

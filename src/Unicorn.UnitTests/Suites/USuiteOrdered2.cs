@@ -5,7 +5,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Ordered suite 2")]
     [Tag(Tag.Ordering)]
-    public class USuiteOrdered2 : TestSuite
+    public class USuiteOrdered2
     {
         public string Output { get; set; }
 

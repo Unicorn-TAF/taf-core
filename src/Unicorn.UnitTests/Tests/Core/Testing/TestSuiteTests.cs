@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Reflection;
 using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Engine;
@@ -7,19 +6,19 @@ using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Suites;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture]
     public class TestSuiteTests : NUnitTestRunner
     {
-        private static USuite suite;
+        private static TestSuite suite;
 
         [OneTimeSetUp]
         public static void SetUp()
         {
             Config.SetTestCategories();
             Config.TestsExecutionOrder = TestsOrder.Declaration;
-            suite = Activator.CreateInstance<USuite>();
+            suite = new TestSuite(new USuite());
         }
 
         [OneTimeTearDown]
