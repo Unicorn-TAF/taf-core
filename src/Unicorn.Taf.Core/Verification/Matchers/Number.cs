@@ -1,5 +1,4 @@
-﻿using System;
-using Unicorn.Taf.Core.Verification.Matchers.MiscMatchers;
+﻿using Unicorn.Taf.Core.Verification.Matchers.MiscMatchers;
 
 namespace Unicorn.Taf.Core.Verification.Matchers
 {
@@ -14,13 +13,5 @@ namespace Unicorn.Taf.Core.Verification.Matchers
         /// <returns><see cref="IsEvenMatcher"/> instance</returns>
         public static IsEvenMatcher IsEven() =>
             new IsEvenMatcher();
-
-        /// <summary>
-        /// Matcher to check if number is positive.
-        /// </summary>
-        /// <returns><see cref="IsPositiveMatcher"/> instance</returns>
-        [Obsolete("Please use IsGreaterThanMatcher instead")]
-        public static IsPositiveMatcher IsPositive() =>
-            new IsPositiveMatcher();
     }
 }
