@@ -90,7 +90,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <summary>
         /// Gets fail exception message.
         /// </summary>
-        public string FailMessage { get; private set; }
+        public string FailMessage { get; internal set; }
 
         /// <summary>
         /// Gets fail exception stack trace.

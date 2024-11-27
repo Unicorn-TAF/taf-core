@@ -7,7 +7,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite that tests parallelization by suite 2")]
     [Tag(Tag.SuiteParallelizaton)]
-    public class UParallelizationSuite2 : TestSuite
+    public class UParallelizationSuite2
     {
         [Test]
         public void ParallelTest21()

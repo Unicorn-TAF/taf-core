@@ -17,6 +17,7 @@ namespace Unicorn.Taf.Core.Testing
     /// </summary>
     public class TestSuite
     {
+        private readonly object _suiteInstance;
         private readonly Test[] _tests;
         private readonly SuiteMethod[] _beforeSuites;
         private readonly SuiteMethod[] _beforeTests;
@@ -32,11 +33,13 @@ namespace Unicorn.Taf.Core.Testing
         /// is retrieved from the instance.<br/>
         /// For each test is performed check for skip
         /// </summary>
-        public TestSuite()
+        public TestSuite(object suiteInstance)
         {
+            _suiteInstance = suiteInstance;
+            Type suiteType = suiteInstance.GetType();
             Metadata = new Dictionary<string, string>();
 
-            foreach (var attribute in GetType().GetCustomAttributes<MetadataAttribute>(true))
+            foreach (var attribute in suiteType.GetCustomAttributes<MetadataAttribute>(true))
             {
                 if (!Metadata.ContainsKey(attribute.Key))
                 {
@@ -44,11 +47,11 @@ namespace Unicorn.Taf.Core.Testing
                 }
             }
 
-            var suiteAttribute = GetType().GetCustomAttribute<SuiteAttribute>(true);
+            var suiteAttribute = suiteType.GetCustomAttribute<SuiteAttribute>(true);
 
             Outcome = new SuiteOutcome
             {
-                Name = suiteAttribute != null ? suiteAttribute.Name : GetType().Name.Split('.').Last(),
+                Name = string.IsNullOrEmpty(suiteAttribute.Name) ? suiteType.Name : suiteAttribute.Name,
                 Result = Status.NotExecuted
             };
 
@@ -73,7 +76,7 @@ namespace Unicorn.Taf.Core.Testing
             {
                 if (tags == null)
                 {
-                    var attributes = GetType().GetCustomAttributes<TagAttribute>(true);
+                    var attributes = _suiteInstance.GetType().GetCustomAttributes<TagAttribute>(true);
                     tags = new HashSet<string>(from attribute in attributes select attribute.Tag.ToUpper());
                 }
 
@@ -97,6 +100,8 @@ namespace Unicorn.Taf.Core.Testing
         public SuiteOutcome Outcome { get; protected set; }
 
         internal Stopwatch ExecutionTimer { get; private set; }
+
+        internal object SuiteInstance => _suiteInstance;
 
         internal void Execute()
         {
@@ -143,7 +148,7 @@ namespace Unicorn.Taf.Core.Testing
 
             foreach (Test test in _tests)
             {
-                test.Skip();
+                test.Skip(reason);
                 Outcome.TestsOutcomes.Add(test.Outcome);
             }
 
@@ -157,15 +162,16 @@ namespace Unicorn.Taf.Core.Testing
 
             if (dependsOnAttribute != null)
             {
-                bool anyFailedMainTest = _tests
-                    .Any(t => !t.Outcome.Result.Equals(Status.Passed) 
-                    && t.TestMethod.Name.Equals(dependsOnAttribute.TestMethod));
+                IEnumerable<Test> failedMainTests = _tests
+                    .Where(t => t.Outcome.Result != Status.Passed 
+                        && t.TestMethod.Name.Equals(dependsOnAttribute.TestMethod));
 
-                if (anyFailedMainTest)
+                if (failedMainTests.Any())
                 {
                     if (Config.DependentTests.Equals(TestsDependency.Skip))
                     {
-                        test.Skip();
+                        string reason = $"The test depends on {failedMainTests.First().Outcome.FullMethodName} which was failed";
+                        test.Skip(reason);
                         Outcome.TestsOutcomes.Add(test.Outcome);
                     }
 
@@ -179,9 +185,18 @@ namespace Unicorn.Taf.Core.Testing
             Array.ForEach(_beforeTests, 
                 beforeTest => SuiteUtilities.GenerateSuiteMethodIds(beforeTest, Outcome.Id, test.Outcome.Title));
 
-            if (skipTests || ExecutionTimer.Elapsed >= Config.SuiteTimeout || !RunSuiteMethods(_beforeTests))
+            if (skipTests)
             {
-                test.Skip();
+                test.Skip("Required to pass AfterTest was failed");
+            }
+            else if (ExecutionTimer.Elapsed >= Config.SuiteTimeout)
+            {
+                test.Skip("Suite execution time reached timeout " + Config.SuiteTimeout);
+            }
+            // If no need to skip all tests and suite timeout not reached run before tests
+            else if (!RunSuiteMethods(_beforeTests)) 
+            {
+                test.Skip("BeforeTest was failed");
             }
             else
             {
@@ -254,7 +269,7 @@ namespace Unicorn.Taf.Core.Testing
         private void GenerateIds()
         {
             // (type name + data set name) is unique int terms of assembly.
-            Outcome.Id = GuidGenerator.FromString(GetType().Name + Outcome.DataSetName);
+            Outcome.Id = GuidGenerator.FromString(_suiteInstance.GetType().Name + Outcome.DataSetName);
 
             Array.ForEach(_beforeSuites,
                 beforeSuite => SuiteUtilities.GenerateSuiteMethodIds(beforeSuite, Outcome.Id));

@@ -103,7 +103,8 @@ namespace Unicorn.Taf.Core.Engine
 
                 foreach (var parametersSet in dataSetsToRun)
                 {
-                    var parameterizedSuite = Activator.CreateInstance(type, parametersSet.Parameters.ToArray()) as TestSuite;
+                    object parameterizedInstance = Activator.CreateInstance(type, parametersSet.Parameters.ToArray());
+                    TestSuite parameterizedSuite = new TestSuite(parameterizedInstance);
                     parameterizedSuite.Metadata.Add("Data Set", parametersSet.Name);
                     parameterizedSuite.Outcome.DataSetName = parametersSet.Name;
                     ExecuteSuiteIteration(parameterizedSuite);
@@ -111,7 +112,8 @@ namespace Unicorn.Taf.Core.Engine
             }
             else
             {
-                var suite = Activator.CreateInstance(type) as TestSuite;
+                object suiteInstance = Activator.CreateInstance(type);
+                TestSuite suite = new TestSuite(suiteInstance);
                 ExecuteSuiteIteration(suite);
             }
         }

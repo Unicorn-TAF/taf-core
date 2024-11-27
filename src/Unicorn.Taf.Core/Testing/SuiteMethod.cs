@@ -147,16 +147,16 @@ namespace Unicorn.Taf.Core.Testing
             }
         }
 
-        private void RunSuiteMethod(TestSuite suiteInstance)
+        private void RunSuiteMethod(TestSuite testSuite)
         {
             try
             {
                 var testTask = Task.Run(() =>
                 {
-                    TestMethod.Invoke(suiteInstance, null);
+                    TestMethod.Invoke(testSuite.SuiteInstance, null);
                 });
 
-                var restSuiteExecutionTime = Config.SuiteTimeout - suiteInstance.ExecutionTimer.Elapsed;
+                var restSuiteExecutionTime = Config.SuiteTimeout - testSuite.ExecutionTimer.Elapsed;
 
                 if (restSuiteExecutionTime < TimeSpan.Zero)
                 {

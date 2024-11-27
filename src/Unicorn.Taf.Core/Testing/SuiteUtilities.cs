@@ -14,16 +14,16 @@ namespace Unicorn.Taf.Core.Testing
         /// Get list of <see cref="MethodInfo"/> from suite instance 
         /// based on specified attribute presence
         /// </summary>
-        /// <param name="suiteInstance"><see cref="TestSuite"/> instance</param>
+        /// <param name="testSuite"><see cref="TestSuite"/> instance</param>
         /// <param name="attributeType"><see cref="Type"/> of attribute</param>
         /// <param name="type">type of suite method (<see cref="SuiteMethodType"/>)</param>
         /// <returns>array of <see cref="SuiteMethod"/> with specified attribute</returns>
         internal static SuiteMethod[] GetSuiteMethodsFrom(
-            TestSuite suiteInstance, 
+            TestSuite testSuite, 
             Type attributeType, 
             SuiteMethodType type)
         {
-            List<MethodInfo> suiteMethodInfos = suiteInstance.GetType().GetRuntimeMethods()
+            List<MethodInfo> suiteMethodInfos = testSuite.SuiteInstance.GetType().GetRuntimeMethods()
                 .Where(m => m.IsDefined(attributeType, true))
                 .ToList();
 
@@ -32,7 +32,7 @@ namespace Unicorn.Taf.Core.Testing
             for (int i = 0; i < suitableMethods.Length; i++)
             {
                 SuiteMethod suiteMethod = new SuiteMethod(suiteMethodInfos[i]);
-                suiteMethod.Outcome.ParentId = suiteInstance.Outcome.Id;
+                suiteMethod.Outcome.ParentId = testSuite.Outcome.Id;
                 suiteMethod.MethodType = type;
                 suitableMethods[i] = suiteMethod;
             }
@@ -44,13 +44,13 @@ namespace Unicorn.Taf.Core.Testing
         /// Get list of tests from suite instance based on [Test] attribute presence. <br/>
         /// Determine if test should be skipped and update runnable tests count for the suite.
         /// </summary>
-        /// <param name="suiteInstance"><see cref="TestSuite"/> instance</param>
+        /// <param name="testSuite"><see cref="TestSuite"/> instance</param>
         /// <returns>array of <see cref="Test"/> instances</returns>
-        internal static Test[] GetTestsFrom(TestSuite suiteInstance)
+        internal static Test[] GetTestsFrom(TestSuite testSuite)
         {
             List<Test> testMethods = new List<Test>();
 
-            List<MethodInfo> suiteMethods = suiteInstance.GetType().GetRuntimeMethods()
+            List<MethodInfo> suiteMethods = testSuite.SuiteInstance.GetType().GetRuntimeMethods()
                 .Where(m => m.IsDefined(typeof(TestAttribute), true) && AdapterUtilities.IsTestRunnable(m))
                 .ToList();
 
@@ -73,7 +73,7 @@ namespace Unicorn.Taf.Core.Testing
                 {
                     var attribute = method.GetCustomAttribute<TestDataAttribute>(true);
 
-                    foreach (DataSet dataSet in AdapterUtilities.GetTestData(attribute.Method, suiteInstance))
+                    foreach (DataSet dataSet in AdapterUtilities.GetTestData(attribute.Method, testSuite.SuiteInstance))
                     {
                         Test test = GenerateTest(method, dataSet);
                         testMethods.Add(test);

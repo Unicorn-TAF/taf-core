@@ -9,6 +9,13 @@ namespace Unicorn.Taf.Core.Testing.Attributes
     public sealed class SuiteAttribute : Attribute
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SuiteAttribute"/> class without custom name.
+        /// </summary>
+        public SuiteAttribute() 
+        { 
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SuiteAttribute"/> class with specified name.
         /// </summary>
         /// <param name="name">test suite name</param>

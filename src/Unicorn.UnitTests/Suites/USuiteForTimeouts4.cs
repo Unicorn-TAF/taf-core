@@ -6,7 +6,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite for timeouts 4")]
     [Tag(Tag.SuiteTimeouts)]
-    public class USuiteForTimeouts4 : TestSuite
+    public class USuiteForTimeouts4
     {
         internal const int Timeout = 250;
 
