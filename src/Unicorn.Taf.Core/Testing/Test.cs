@@ -123,11 +123,12 @@ namespace Unicorn.Taf.Core.Testing
         /// <summary>
         /// Skip test and invoke OnTestSkip event
         /// </summary>
-        public void Skip()
+        public void Skip(string reason)
         {
             Outcome.Result = Status.Skipped;
             Outcome.StartTime = DateTime.Now;
             Outcome.ExecutionTime = TimeSpan.FromSeconds(0);
+            Outcome.FailMessage = reason;
             ULog.Warn("Test '{0}' {1}", Outcome.Title, Outcome.Result);
             TafEvents.ExecuteTestEvent(OnTestSkip, this, nameof(OnTestSkip));
         }

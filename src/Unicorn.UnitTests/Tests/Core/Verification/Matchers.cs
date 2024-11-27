@@ -1,4 +1,7 @@
 ﻿using NUnit.Framework;
+using Unicorn.Taf.Core.Testing;
+using Unicorn.Taf.Core.Verification.Matchers;
+using Unicorn.Taf.Core.Verification.Matchers.CoreMatchers;
 using Unicorn.UnitTests.BO;
 using Um = Unicorn.Taf.Core.Verification.Matchers;
 using Uv = Unicorn.Taf.Core.Verification;
@@ -106,6 +109,41 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
             Assert.Throws<Uv.AssertionException>(delegate 
             {
                 Uv.Assert.That(null, Um.Is.Not(Um.Is.EqualTo("23")));
+            });
+
+        #endregion
+
+        #region IsOfType
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsOfTypeStringPositive() =>
+            Uv.Assert.That("asd", Um.Is.OfType(typeof(string)));
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsOfTypeStringWithNotPositive() =>
+            Uv.Assert.That("asd", Um.Is.Not(Um.Is.OfType(typeof(int))));
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsOfTypeWithInheritanceNegative() =>
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                Uv.Assert.That(new OfTypeMatcher(typeof(string)), Um.Is.OfType(typeof(TypeUnsafeMatcher)));
+            });
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsOfTypeWithNullNegative() =>
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                string test = null;
+                Uv.Assert.That(test, Um.Is.OfType(typeof(string)));
+            });
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsOfTypeWithNotAndNullNegative() =>
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                string test = null;
+                Uv.Assert.That(test, Um.Is.Not(Um.Is.OfType(typeof(string))));
             });
 
         #endregion
