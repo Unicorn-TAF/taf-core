@@ -27,6 +27,14 @@ namespace Unicorn.Taf.Core.Verification.Matchers
             new NullMatcher();
 
         /// <summary>
+        /// Matcher to check if actual object is of expected type.
+        /// </summary>
+        /// <param name="expectedType">expected object type</param>
+        /// <returns><see cref="OfTypeMatcher"/> instance</returns>
+        public static OfTypeMatcher OfType(Type expectedType) =>
+            new OfTypeMatcher(expectedType);
+
+        /// <summary>
         /// Matcher to check if <see cref="IComparable"/> is greater than other <see cref="IComparable"/>.
         /// </summary>
         /// <param name="compareTo">object to compare</param>
