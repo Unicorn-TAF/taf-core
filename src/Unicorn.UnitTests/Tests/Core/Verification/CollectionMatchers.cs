@@ -5,7 +5,7 @@ using Unicorn.UnitTests.BO;
 using Um = Unicorn.Taf.Core.Verification.Matchers;
 using Uv = Unicorn.Taf.Core.Verification;
 
-namespace Unicorn.UnitTests.Core.Verification
+namespace Unicorn.UnitTests.Tests.Core.Verification
 {
     [TestFixture]
     public class CollectionMatchers

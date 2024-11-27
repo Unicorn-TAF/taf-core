@@ -7,7 +7,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Parameterized test suite"), Parameterized]
     [Tag(Tag.Parameterized)]
-    public class UParameterizedSuite : TestSuite
+    public class UParameterizedSuite
     {
         private readonly SampleObject so;
 

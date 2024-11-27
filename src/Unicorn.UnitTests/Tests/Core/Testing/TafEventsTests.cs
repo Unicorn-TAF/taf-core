@@ -7,7 +7,7 @@ using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Suites;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture(TafEventsSuiteMode.RunAll)]
     [TestFixture(TafEventsSuiteMode.FailBeforeSuite)]

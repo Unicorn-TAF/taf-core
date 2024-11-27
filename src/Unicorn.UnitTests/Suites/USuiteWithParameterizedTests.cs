@@ -7,7 +7,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite with parameterized tests")]
     [Tag(Tag.ParameterizedTests)]
-    public class USuiteWithParameterizedTests : TestSuite
+    public class USuiteWithParameterizedTests
     {
         public static string Output { get; set; }
         

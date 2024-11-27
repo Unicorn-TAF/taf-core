@@ -5,7 +5,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite for tests order")]
     [Tag(Tag.TestsOrder)]
-    public class USuiteForTestsOrder : TestSuite
+    public class USuiteForTestsOrder
     {
         [Test]
         [DependsOn(nameof(Test3))]

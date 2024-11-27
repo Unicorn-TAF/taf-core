@@ -5,7 +5,7 @@ using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture]
     public class ParameterizedTestSuiteWithNoData : NUnitTestRunner

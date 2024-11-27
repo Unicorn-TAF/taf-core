@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using NUnit.Framework;
 using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Engine;
@@ -7,7 +6,7 @@ using Unicorn.Taf.Core.Testing;
 using Unicorn.UnitTests.Suites;
 using Unicorn.UnitTests.Util;
 
-namespace Unicorn.UnitTests.Core.Testing
+namespace Unicorn.UnitTests.Tests.Core.Testing
 {
     [TestFixture]
     public class ParameterizedTestSuite : NUnitTestRunner
@@ -15,7 +14,7 @@ namespace Unicorn.UnitTests.Core.Testing
         private static TestsRunner runner;
         private static string executionOutput;
 
-        private readonly UParameterizedSuite _suite = Activator.CreateInstance<UParameterizedSuite>();
+        private readonly TestSuite _suite = new TestSuite(new UParameterizedSuite());
         
         [OneTimeSetUp]
         public static void Setup()

@@ -5,7 +5,7 @@ namespace Unicorn.UnitTests.Suites
 {
     [Suite("Suite for tests with cycle dependency")]
     [Tag(Tag.TestsCycleDependency)]
-    public class USuiteForCycleDependency : TestSuite
+    public class USuiteForCycleDependency
     {
         [Test]
         [DependsOn(nameof(Test1))]

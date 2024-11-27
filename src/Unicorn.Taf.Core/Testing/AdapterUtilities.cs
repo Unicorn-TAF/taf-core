@@ -31,7 +31,7 @@ namespace Unicorn.Taf.Core.Testing
                 in suiteType.GetCustomAttributes<TagAttribute>(true)
                 select attribute.Tag.ToUpper().Trim();
 
-            var name = suiteType.GetCustomAttribute<SuiteAttribute>(true).Name.ToUpper().Trim();
+            string name = GetSuiteName(suiteType).ToUpper();
 
             if (!tags.Intersect(Config.RunTags).Any() && !Config.RunTags.Contains(name) && Config.RunTags.Any())
             {
@@ -147,7 +147,10 @@ namespace Unicorn.Taf.Core.Testing
         /// </summary>
         /// <param name="suiteType">suite type</param>
         /// <returns>suite name</returns>
-        public static string GetSuiteName(Type suiteType) =>
-            suiteType.GetCustomAttribute<SuiteAttribute>(true).Name.Trim();
+        public static string GetSuiteName(Type suiteType)
+        {
+            SuiteAttribute suiteAttribute = suiteType.GetCustomAttribute<SuiteAttribute>(true);
+            return string.IsNullOrEmpty(suiteAttribute.Name) ? suiteType.Name : suiteAttribute.Name.Trim();
+        }
     }
 }
