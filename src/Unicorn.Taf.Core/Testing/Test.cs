@@ -45,38 +45,6 @@ namespace Unicorn.Taf.Core.Testing
         }
 
         /// <summary>
-        /// Delegate used for test events invocation
-        /// </summary>
-        /// <param name="test">current <see cref="Test"/> instance</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public delegate void TestEvent(Test test);
-
-        /// <summary>
-        /// Event is invoked before test execution
-        /// </summary>
-        public static event TestEvent OnTestStart;
-
-        /// <summary>
-        /// Event is invoked after test execution
-        /// </summary>
-        public static event TestEvent OnTestFinish;
-
-        /// <summary>
-        /// Event is invoked on test pass (<see cref="OnTestFinish"/> will be invoked anyway)
-        /// </summary>
-        public static event TestEvent OnTestPass;
-
-        /// <summary>
-        /// Event is invoked on test fail (<see cref="OnTestFinish"/> will be invoked anyway)
-        /// </summary>
-        public static event TestEvent OnTestFail;
-
-        /// <summary>
-        /// Event is invoked on test skip
-        /// </summary>
-        public static event TestEvent OnTestSkip;
-
-        /// <summary>
         /// Gets test categories
         /// </summary>
         public HashSet<string> Categories
@@ -106,7 +74,7 @@ namespace Unicorn.Taf.Core.Testing
         {
             ULog.Info("-------- Test '{0}'", Outcome.Title);
 
-            TafEvents.ExecuteTestEvent(OnTestStart, this, nameof(OnTestStart));
+            TafEvents.CallOnTestStart(this);
                 
             Outcome.StartTime = DateTime.Now;
             TestTimer = Stopwatch.StartNew();
@@ -117,7 +85,7 @@ namespace Unicorn.Taf.Core.Testing
             Outcome.ExecutionTime = TestTimer.Elapsed;
             LogStatus();
 
-            TafEvents.ExecuteTestEvent(OnTestFinish, this, nameof(OnTestFinish));
+            TafEvents.CallOnTestFinish(this);
         }
 
         /// <summary>
@@ -130,7 +98,7 @@ namespace Unicorn.Taf.Core.Testing
             Outcome.ExecutionTime = TimeSpan.FromSeconds(0);
             Outcome.FailMessage = reason;
             ULog.Warn("Test '{0}' {1}", Outcome.Title, Outcome.Result);
-            TafEvents.ExecuteTestEvent(OnTestSkip, this, nameof(OnTestSkip));
+            TafEvents.CallOnTestSkip(this);
         }
 
         private void RunTestMethod(TestSuite testSuite)
@@ -159,7 +127,7 @@ namespace Unicorn.Taf.Core.Testing
                 }
 
                 Outcome.Result = Status.Passed;
-                TafEvents.ExecuteTestEvent(OnTestPass, this, nameof(OnTestPass));
+                TafEvents.CallOnTestPass(this);
             }
             catch (Exception ex)
             {
@@ -168,7 +136,7 @@ namespace Unicorn.Taf.Core.Testing
                     ex.InnerException.InnerException;
 
                 Fail(failExeption);
-                TafEvents.ExecuteTestEvent(OnTestFail, this, nameof(OnTestFail));
+                TafEvents.CallOnTestFail(this);
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Unicorn.Taf.Core.Internal;
@@ -69,28 +68,6 @@ namespace Unicorn.Taf.Core.Testing
         }
 
         /// <summary>
-        /// Delegate used for suite events invocation
-        /// </summary>
-        /// <param name="testSuite">current <see cref="TestSuite"/> instance</param>
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public delegate void UnicornSuiteEvent(TestSuite testSuite);
-
-        /// <summary>
-        /// Event is invoked before suite execution
-        /// </summary>
-        public static event UnicornSuiteEvent OnSuiteStart;
-
-        /// <summary>
-        /// Event is invoked after suite execution
-        /// </summary>
-        public static event UnicornSuiteEvent OnSuiteFinish;
-
-        /// <summary>
-        /// Event is invoked if suite is skipped
-        /// </summary>
-        public static event UnicornSuiteEvent OnSuiteSkip;
-
-        /// <summary>
         /// Gets test suite features. Suite could not have any feature
         /// </summary>
         public HashSet<string> Tags
@@ -137,7 +114,7 @@ namespace Unicorn.Taf.Core.Testing
 
             ULog.Info("---------------- Suite '{0}'", fullName);
 
-            TafEvents.ExecuteSuiteEvent(OnSuiteStart, this, nameof(OnSuiteStart));
+            TafEvents.CallOnSuiteStart(this);
             ExecutionTimer = Stopwatch.StartNew();
 
             if (RunSuiteMethods(_beforeSuites))
@@ -158,7 +135,7 @@ namespace Unicorn.Taf.Core.Testing
             Outcome.ExecutionTime = ExecutionTimer.Elapsed;
 
             ULog.Info("Suite {0}", Outcome.Result);
-            TafEvents.ExecuteSuiteEvent(OnSuiteFinish, this, nameof(OnSuiteFinish));
+            TafEvents.CallOnSuiteFinish(this);
         }
 
         /// <summary>
@@ -176,7 +153,7 @@ namespace Unicorn.Taf.Core.Testing
             }
 
             Outcome.Result = Status.Skipped;
-            TafEvents.ExecuteSuiteEvent(OnSuiteSkip, this, nameof(OnSuiteSkip));
+            TafEvents.CallOnSuiteSkip(this);
         }
 
         private void ProcessTest(Test test)

@@ -23,7 +23,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Config.ParallelBy = Parallelization.Suite;
             Config.Threads = 2;
             ParallelSuitesHelper.Reset();
-            Test.OnTestFinish += OnTestFinish;
+            TafEvents.OnTestFinish += OnTestFinish;
 
             runner = new TestsRunner(Assembly.GetExecutingAssembly(), false);
         }
@@ -37,7 +37,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         public static void ResetConfig()
         {
             Config.Reset();
-            Test.OnTestFinish -= OnTestFinish;
+            TafEvents.OnTestFinish -= OnTestFinish;
             executedTestsOrder = null;
             runner = null;
         }

@@ -71,33 +71,6 @@ namespace Unicorn.Taf.Core.Testing
         }
 
         /// <summary>
-        /// Delegate used for suite method events invocation
-        /// </summary>
-        /// <param name="suiteMethod">current <see cref="SuiteMethod"/> instance</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public delegate void UnicornSuiteMethodEvent(SuiteMethod suiteMethod);
-
-        /// <summary>
-        /// Event is invoked before suite method execution
-        /// </summary>
-        public static event UnicornSuiteMethodEvent OnSuiteMethodStart;
-
-        /// <summary>
-        /// Event is invoked after suite method execution
-        /// </summary>
-        public static event UnicornSuiteMethodEvent OnSuiteMethodFinish;
-
-        /// <summary>
-        /// Event is invoked on suite method pass (<see cref="OnSuiteMethodFinish"/> OnTestFinish will be invoked anyway)
-        /// </summary>
-        public static event UnicornSuiteMethodEvent OnSuiteMethodPass;
-
-        /// <summary>
-        /// Event is invoked on suite method fail (<see cref="OnSuiteMethodFinish"/> will be invoked anyway)
-        /// </summary>
-        public static event UnicornSuiteMethodEvent OnSuiteMethodFail;
-
-        /// <summary>
         /// Gets or sets current test outcome, contains base information about execution results
         /// </summary>
         public TestOutcome Outcome { get; set; }
@@ -127,7 +100,7 @@ namespace Unicorn.Taf.Core.Testing
         {
             ULog.Info("---- {0} '{1}'", MethodType, Outcome.Title);
 
-            TafEvents.ExecuteSuiteMethodEvent(OnSuiteMethodStart, this, nameof(OnSuiteMethodStart));
+            TafEvents.CallOnSuiteMethodStart(this);
 
             Outcome.StartTime = DateTime.Now;
             TestTimer = Stopwatch.StartNew();
@@ -138,7 +111,7 @@ namespace Unicorn.Taf.Core.Testing
             Outcome.ExecutionTime = TestTimer.Elapsed;
 
             LogStatus();
-            TafEvents.ExecuteSuiteMethodEvent(OnSuiteMethodFinish, this, nameof(OnSuiteMethodFinish));
+            TafEvents.CallOnSuiteMethodFinish(this);
         }
 
         /// <summary>
@@ -200,7 +173,7 @@ namespace Unicorn.Taf.Core.Testing
                 }
                 
                 Outcome.Result = Status.Passed;
-                TafEvents.ExecuteSuiteMethodEvent(OnSuiteMethodPass, this, nameof(OnSuiteMethodPass));
+                TafEvents.CallOnSuiteMethodPass(this);
             }
             catch (Exception ex)
             {
@@ -209,7 +182,7 @@ namespace Unicorn.Taf.Core.Testing
                     ex.InnerException.InnerException;
 
                 Fail(failExeption);
-                TafEvents.ExecuteSuiteMethodEvent(OnSuiteMethodFail, this, nameof(OnSuiteMethodFail));
+                TafEvents.CallOnSuiteMethodFail(this);
             }
         }
     }
