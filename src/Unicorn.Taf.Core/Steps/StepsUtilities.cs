@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Diagnostics;
 using System.Reflection;
 using Unicorn.Taf.Core.Steps.Attributes;
 
@@ -17,13 +19,43 @@ namespace Unicorn.Taf.Core.Steps
         /// <returns>step description as string</returns>
         public static string GetStepInfo(MethodBase method, object[] arguments)
         {
-            var attribute = method.GetCustomAttribute<StepAttribute>(true);
+            StepAttribute attribute = method.GetCustomAttribute<StepAttribute>(true);
             return attribute == null ? string.Empty : string.Format(attribute.Description, ConvertArguments(arguments));
         }
 
-        private static string[] ConvertArguments(object[] arguments)
+        internal static void WrapStep(Action action, params object[] arguments)
         {
-            var convertedArguments = new string[arguments.Length];
+            MethodBase methodBase = new StackFrame(1).GetMethod();
+
+            try
+            {
+                TafEvents.CallOnStepStartEvent(methodBase, arguments);
+                action();
+            }
+            finally
+            {
+                TafEvents.CallOnStepFinishEvent(methodBase, arguments);
+            }
+        }
+
+        internal static T WrapStep<T>(Func<T> action, params object[] arguments)
+        {
+            MethodBase methodBase = new StackFrame(1).GetMethod();
+
+            try
+            {
+                TafEvents.CallOnStepStartEvent(methodBase, arguments);
+                return action();
+            }
+            finally
+            {
+                TafEvents.CallOnStepFinishEvent(methodBase, arguments);
+            }
+        }
+
+        private static object[] ConvertArguments(object[] arguments)
+        {
+            var convertedArguments = new object[arguments.Length];
 
             for (int i = 0; i < arguments.Length; i++)
             {
@@ -33,7 +65,7 @@ namespace Unicorn.Taf.Core.Steps
             return convertedArguments;
         }
 
-        private static string GetArgumentValue(object argument)
+        private static object GetArgumentValue(object argument)
         {
             if (argument == null)
             {
@@ -54,7 +86,7 @@ namespace Unicorn.Taf.Core.Steps
                 return $"[{string.Join("; ", arrayList.ToArray())}]";
             }
 
-            return argument.ToString();
+            return argument;
         }
     }
 }

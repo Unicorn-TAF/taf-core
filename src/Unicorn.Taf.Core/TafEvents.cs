@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Unicorn.Taf.Core.Logging;
+using Unicorn.Taf.Core.Testing;
 
-namespace Unicorn.Taf.Core.Testing
+namespace Unicorn.Taf.Core
 {
     /// <summary>
     /// Entry point for framework events.
@@ -101,6 +103,95 @@ namespace Unicorn.Taf.Core.Testing
         /// <param name="test">current <see cref="Test"/> instance</param>
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public delegate void TestEvent(Test test);
+
+        #region Step events
+
+        /// <summary>
+        /// Event, which is invoked before test step is executed.
+        /// </summary>
+        public static event StepEvent OnStepStart;
+
+        /// <summary>
+        /// Event, which is invoked after test step execution.
+        /// </summary>
+        public static event StepEvent OnStepFinish;
+
+        /// <summary>
+        /// Event, which is invoked on test step failure.
+        /// </summary>
+        public static event StepFailEvent OnStepFail;
+
+        /// <summary>
+        /// Delegate for test step events.
+        /// </summary>
+        /// <param name="methodBase"><see cref="MethodBase"/> representing test step</param>
+        /// <param name="arguments">test step method arguments array</param>
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public delegate void StepEvent(MethodBase methodBase, object[] arguments);
+
+        /// <summary>
+        /// Delegate for test step fail event.
+        /// </summary>
+        /// <param name="methodBase"><see cref="MethodBase"/> representing test step</param>
+        /// <param name="exception">exception test step failed with</param>
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public delegate void StepFailEvent(MethodBase methodBase, Exception exception);
+
+        #endregion
+
+        /// <summary>
+        /// Safely calls step start event for specified method and arguments.
+        /// The call will execute only for methods marked as steps.
+        /// </summary>
+        /// <param name="methodBase">target step method</param>
+        /// <param name="arguments">method arguments</param>
+        public static void CallOnStepStartEvent(MethodBase methodBase, params object[] arguments)
+        {
+            try
+            {
+                OnStepStart?.Invoke(methodBase, arguments);
+            }
+            catch (Exception ex)
+            {
+                LogEventCallError(nameof(OnStepStart), ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Safely calls step finish event for specified method and arguments.
+        /// The call will execute only for methods marked as steps.
+        /// </summary>
+        /// <param name="methodBase">target step method</param>
+        /// <param name="arguments">method arguments</param>
+        public static void CallOnStepFinishEvent(MethodBase methodBase, params object[] arguments)
+        {
+            try
+            {
+                OnStepFinish?.Invoke(methodBase, arguments);
+            }
+            catch (Exception ex)
+            {
+                LogEventCallError(nameof(OnStepFinish), ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Safely calls step fail event for specified method and exception.
+        /// The call will execute only for methods marked as steps.
+        /// </summary>
+        /// <param name="methodBase">target step method</param>
+        /// <param name="exception">fail exception</param>
+        public static void CallOnStepFailEvent(MethodBase methodBase, Exception exception)
+        {
+            try
+            {
+                OnStepFail?.Invoke(methodBase, exception);
+            }
+            catch (Exception ex)
+            {
+                LogEventCallError(nameof(OnStepFail), ex.ToString());
+            }
+        }
 
         internal static void CallOnSuiteStart(TestSuite suite) =>
             ExecuteSuiteEvent(OnSuiteStart, suite, nameof(OnSuiteStart));
