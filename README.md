@@ -1,9 +1,8 @@
-![Nuget](https://img.shields.io/nuget/v/Unicorn.Taf.Core?style=plastic)
-![Nuget](https://img.shields.io/nuget/dt/Unicorn.Taf.Core?style=plastic)
+![Nuget](https://img.shields.io/nuget/v/Unicorn.Taf.Core?style=plastic) ![Nuget](https://img.shields.io/nuget/dt/Unicorn.Taf.Core?style=plastic)
 
 # Unicorn.Taf.Core
 
-Core of unicorn automation framework.
+Core of Unicorn test automation framework.
 
 * Unit test framework implementation
 * Base tests runners
@@ -140,7 +139,7 @@ Any of properties are optional, in case of property absence default value is use
     - Suite
     - None (default)
 
- - **hreads**: specifies how many threads are used to run tests in parallel. Default: 1
+ - **threads**: specifies how many threads are used to run tests in parallel. Default: 1
  - **testTimeout**: specifies timeout for test and suite method execution in minutes. Default: 15
  - **suiteTimeout**: specifies timeout for test suite execution in minutes. Default: 40
  - **tags**: list of suites tags to be run. Default: empty (don't filter out suites by tags)

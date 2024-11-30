@@ -4,9 +4,9 @@
     <id>Unicorn.Taf.Core</id>
     <version>$version$</version>
     <title>Unicorn.Taf.Core</title>
-    <authors>Vitaliy Dobriyan</authors>
+    <authors>Vitalii Dobriian</authors>
     <license type="expression">Apache-2.0</license>
-    <copyright>Copyright (c) Vitaliy Dobriyan 2024</copyright>
+    <copyright>Copyright (c) Vitalii Dobriian 2024</copyright>
     <projectUrl>https://unicorn-taf.github.io</projectUrl>
     <repository type="git" url="https://github.com/Unicorn-TAF/taf-core"/>
     <icon>_content/icon.png</icon>
@@ -21,7 +21,7 @@
     <tags>unicorn-taf automation tests steps verification matchers</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Unicorn.Taf.Api" version="1.1.0"/>
+        <dependency id="Unicorn.Taf.Api" version="1.2.0"/>
       </group>
     </dependencies>
   </metadata>
