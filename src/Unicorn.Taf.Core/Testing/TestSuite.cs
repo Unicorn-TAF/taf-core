@@ -28,6 +28,14 @@ namespace Unicorn.Taf.Core.Testing
         private bool skipTests = false;
 
         /// <summary>
+        /// protected constructor for backward compatibility with suites inheriting TestSuite
+        /// </summary>
+        protected TestSuite()
+        {
+
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TestSuite"/> class.<br/>
         /// On Initialize the list of Tests, BeforeTests, AfterTests, BeforeSuites and AfterSuites 
         /// is retrieved from the instance.<br/>

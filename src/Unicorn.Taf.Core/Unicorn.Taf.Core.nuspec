@@ -4,28 +4,30 @@
     <id>Unicorn.Taf.Core</id>
     <version>$version$</version>
     <title>Unicorn.Taf.Core</title>
-    <authors>Vitaliy Dobriyan</authors>
+    <authors>Vitalii Dobriian</authors>
     <license type="expression">Apache-2.0</license>
-    <copyright>Copyright (c) Vitaliy Dobriyan 2024</copyright>
+    <copyright>Copyright (c) Vitalii Dobriian 2024</copyright>
     <projectUrl>https://unicorn-taf.github.io</projectUrl>
     <repository type="git" url="https://github.com/Unicorn-TAF/taf-core"/>
-    <icon>images\icon.png</icon>
+    <icon>_content/icon.png</icon>
+    <readme>_content/README.md</readme>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       Unicorn is test automation framework which provides wide spectrum of functionality out of box to start efficient test automation process in short terms.
       Unicorn features: asserts with collection of matchers, functionality for test steps implementation, parameterized tests and suites, tests dependency.
       This package includes core of unicorn automation framework, which is referenced by your tests. You will need to install nuget test adapter or console runner to run your tests.
     </description>
-    <releaseNotes>TestCaseId attribute</releaseNotes>
+    <releaseNotes>https://github.com/Unicorn-TAF/taf-core/releases</releaseNotes>
     <tags>unicorn-taf automation tests steps verification matchers</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Unicorn.Taf.Api" version="1.1.0"/>
+        <dependency id="Unicorn.Taf.Api" version="1.2.0"/>
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\icon.png" target="images\" />
+    <file src="..\..\README.md" target="_content"/>
+    <file src="..\..\icon.png" target="_content"/>
     <file src="bin\Release\netstandard2.0\unicorn.taf.core.dll" target="lib\netstandard2.0" />
     <file src="bin\Release\netstandard2.0\unicorn.taf.core.xml" target="lib\netstandard2.0" />
   </files>
