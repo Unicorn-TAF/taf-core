@@ -13,9 +13,9 @@ Core of Unicorn test automation framework.
 ## Test suite example
 
 ```csharp
-/// Test suite example. The class should be marked as [Suite].
-/// It's possible to specify any number of suite tags and metadata.
-/// Suite tags allow to use parameterized targeted runs: suites are selected based on specific tags presence.
+// Test suite example. The class should be marked as [Suite].
+// It's possible to specify any number of suite tags and metadata.
+// Suite tags allow to use parameterized targeted runs: suites are selected based on specific tags presence.
 [Suite("Hello World web app")]
 [Tag(Platforms.Web), Tag(Apps.HelloWorld)]
 [Metadata("Description", "Example of test suite with parameterized test.")]
@@ -24,10 +24,10 @@ public class HelloWorldWebSuite : BaseWebSuite
 {
     private HelloWorldPage HelloWorld => website.GetPage<HelloWorldPage>();
 
-    /// Data for parameterized test. The method should return a list of DataSet.
-    /// First parameter of DataSet is data set name and it is not a part of test data.
-    /// For test parameterization the method could be static or non-static.
-    /// For whole suite parameterization the method should be marked as [SuiteData] and be static.
+    // Data for parameterized test. The method should return a list of DataSet.
+    // First parameter of DataSet is data set name and it is not a part of test data.
+    // For test parameterization the method could be static or non-static.
+    // For whole suite parameterization the method should be marked as [SuiteData] and be static.
     public List<DataSet> TestParameters() =>
         new List<DataSet>
         {
@@ -40,8 +40,8 @@ public class HelloWorldWebSuite : BaseWebSuite
                 Is.Not(UI.Control.HasAttributeContains("class", "error"))),
         };
 
-    /// Example of parameterized test. The method should be marked as [Test]
-    /// and have the same number of parameters as DataSets in test data (ignoring data set name).
+    // Example of parameterized test. The method should be marked as [Test]
+    // and have the same number of parameters as DataSets in test data (ignoring data set name).
     [Author(Authors.JDoe)]
     [Category(Categories.Smoke)]
     [Test("'Say' button functionality")]
@@ -63,9 +63,9 @@ public class HelloWorldWebSuite : BaseWebSuite
         Assert.That(HelloWorld.Modal.TextContent, UI.Control.HasText(expectedText));
     }
 
-    /// Example of simple test with specified category.
-    /// It's possible to specify tests execution order within a test suite using [Order].
-    /// Tests with higher order will be executed later.
+    // Example of simple test with specified category.
+    // It's possible to specify tests execution order within a test suite using [Order].
+    // Tests with higher order will be executed later.
     [Author(Authors.JDoe)]
     [Category(Categories.Smoke)]
     [Test("Hello World page default layout")]
@@ -76,10 +76,10 @@ public class HelloWorldWebSuite : BaseWebSuite
             .VerifyThat(HelloWorld.NameInput, UI.TextInput.HasValue(string.Empty))
             .AssertChain();
 
-    /// Actions executed after each test.
-    /// It's possible to specify:
-    ///  - whether it needs to be run in case of test fail or not
-    ///  - whether need to skip all next tests if AfterTest is failed or not
+    // Actions executed after each test.
+    // It's possible to specify:
+    //  - whether it needs to be run in case of test fail or not
+    //  - whether need to skip all next tests if AfterTest is failed or not
     [AfterTest]
     public void RefreshPage() =>
         Do.Website.RefreshPage();
@@ -90,12 +90,12 @@ public class HelloWorldWebSuite : BaseWebSuite
 
 ```csharp
 
-/// Actions performed before and/or after all tests execution.
+// Actions performed before and/or after all tests execution.
 [TestAssembly]
 public class TestsAssembly
 {
-    /// Actions before all tests execution.
-    /// The method should be static.
+    // Actions before all tests execution.
+    // The method should be static.
     [RunInitialize]
     public static void InitRun()
     {
@@ -111,8 +111,8 @@ public class TestsAssembly
         Unicorn.Taf.Core.Config.DependentTests = Unicorn.Taf.Core.TestsDependency.Skip;
     }
 
-    /// Actions after all tests execution.
-    /// The method should be static.
+    // Actions after all tests execution.
+    // The method should be static.
     [RunFinalize]
     public static void FinalizeRun()
     {
