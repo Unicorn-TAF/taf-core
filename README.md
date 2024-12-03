@@ -10,6 +10,9 @@ Core of Unicorn test automation framework.
 * Base utilities
 * Asserts and base matchers
 
+### Migration notes
+[Migration notes to TAF v4](https://unicorn-taf.github.io/docs/migration/migration-to-taf-v4/)
+
 ## Test suite example
 
 ```csharp
