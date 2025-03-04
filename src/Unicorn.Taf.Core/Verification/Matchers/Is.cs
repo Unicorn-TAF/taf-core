@@ -67,6 +67,30 @@ namespace Unicorn.Taf.Core.Verification.Matchers
             new IsLessThanOrEqualToMatcher(compareTo);
 
         /// <summary>
+        /// Matcher to check if <see cref="double"/> is close enough to other <see cref="double"/> with epsilon.
+        /// </summary>
+        /// <param name="compareTo">object to compare</param>
+        /// <returns><see cref="DoubleIsCloseToMatcher"/> matcher instance</returns>
+        public static DoubleIsCloseToMatcher IsCloseTo(double compareTo, double epsilon) =>
+            new DoubleIsCloseToMatcher(compareTo, epsilon);
+
+        /// <summary>
+        /// Matcher to check if <see cref="TimeSpan"/> is close enough to other <see cref="TimeSpan"/> with epsilon.
+        /// </summary>
+        /// <param name="compareTo">object to compare</param>
+        /// <returns><see cref="TimeSpanIsCloseToMatcher"/> matcher instance</returns>
+        public static TimeSpanIsCloseToMatcher IsCloseTo(TimeSpan compareTo, TimeSpan epsilon) =>
+            new TimeSpanIsCloseToMatcher(compareTo, epsilon);
+
+        /// <summary>
+        /// Matcher to check if <see cref="DateTime"/> is close enough to other <see cref="DateTime"/> with epsilon.
+        /// </summary>
+        /// <param name="compareTo">object to compare</param>
+        /// <returns><see cref="DateTimeIsCloseToMatcher"/> matcher instance</returns>
+        public static DateTimeIsCloseToMatcher IsCloseTo(DateTime compareTo, TimeSpan epsilon) =>
+            new DateTimeIsCloseToMatcher(compareTo, epsilon);
+
+        /// <summary>
         /// Matcher to negotiate action of another matcher.
         /// </summary>
         /// <param name="matcher">instance of matcher with specified check</param>
