@@ -23,7 +23,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
+        run: |
+          dotnet restore ./src/Unicorn.Taf.Core/Unicorn.Taf.Core.csproj
+          dotnet restore ./src/Unicorn.UnitTests/Unicorn.UnitTests.csproj
       - name: Build
         run: dotnet build ./src/Unicorn.Taf.Core/Unicorn.Taf.Core.csproj --configuration Release
       - name: Test
