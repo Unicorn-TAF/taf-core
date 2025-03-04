@@ -71,7 +71,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers
         /// </summary>
         /// <param name="compareTo">object to compare</param>
         /// <returns><see cref="DoubleIsCloseToMatcher"/> matcher instance</returns>
-        public static DoubleIsCloseToMatcher IsCloseTo(double compareTo, double epsilon) =>
+        public static DoubleIsCloseToMatcher CloseTo(double compareTo, double epsilon) =>
             new DoubleIsCloseToMatcher(compareTo, epsilon);
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers
         /// </summary>
         /// <param name="compareTo">object to compare</param>
         /// <returns><see cref="TimeSpanIsCloseToMatcher"/> matcher instance</returns>
-        public static TimeSpanIsCloseToMatcher IsCloseTo(TimeSpan compareTo, TimeSpan epsilon) =>
+        public static TimeSpanIsCloseToMatcher CloseTo(TimeSpan compareTo, TimeSpan epsilon) =>
             new TimeSpanIsCloseToMatcher(compareTo, epsilon);
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers
         /// </summary>
         /// <param name="compareTo">object to compare</param>
         /// <returns><see cref="DateTimeIsCloseToMatcher"/> matcher instance</returns>
-        public static DateTimeIsCloseToMatcher IsCloseTo(DateTime compareTo, TimeSpan epsilon) =>
+        public static DateTimeIsCloseToMatcher CloseTo(DateTime compareTo, TimeSpan epsilon) =>
             new DateTimeIsCloseToMatcher(compareTo, epsilon);
 
         /// <summary>

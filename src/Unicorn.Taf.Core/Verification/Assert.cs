@@ -212,7 +212,7 @@ namespace Unicorn.Taf.Core.Verification
                 }
                 else
                 {
-                    actual = ex.GetType().FullName + " was thrown";
+                    actual = "was " + ex.GetType().FullName;
                 }
             }
 

@@ -299,103 +299,103 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToPositive() =>
-            Uv.Assert.That(0.001, Um.Is.IsCloseTo(0.0012, 0.0003));
+            Uv.Assert.That(0.001, Um.Is.CloseTo(0.0012, 0.0003));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToPositiveSwap() =>
-            Uv.Assert.That(0.0012, Um.Is.IsCloseTo(0.001, 0.0003));
+            Uv.Assert.That(0.0012, Um.Is.CloseTo(0.001, 0.0003));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToPositiveWithNegation() =>
-            Uv.Assert.That(0.0012, Um.Is.Not(Um.Is.IsCloseTo(0.001, 0.0001)));
+            Uv.Assert.That(0.0012, Um.Is.Not(Um.Is.CloseTo(0.001, 0.0001)));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(0.001, Um.Is.IsCloseTo(0.0012, 0.0001));
+                Uv.Assert.That(0.001, Um.Is.CloseTo(0.0012, 0.0001));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToNegativeSwap() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(0.0012, Um.Is.IsCloseTo(0.001, 0.0001));
+                Uv.Assert.That(0.0012, Um.Is.CloseTo(0.001, 0.0001));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDoubleIsCloseToNegativeWithNegation() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(0.001, Um.Is.Not(Um.Is.IsCloseTo(0.0012, 0.0003)));
+                Uv.Assert.That(0.001, Um.Is.Not(Um.Is.CloseTo(0.0012, 0.0003)));
             });
 
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToPositive() =>
-            Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.IsCloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(3)));
+            Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.CloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(3)));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToPositiveSwap() =>
-            Uv.Assert.That(TimeSpan.FromSeconds(14), Um.Is.IsCloseTo(TimeSpan.FromSeconds(12), TimeSpan.FromSeconds(3)));
+            Uv.Assert.That(TimeSpan.FromSeconds(14), Um.Is.CloseTo(TimeSpan.FromSeconds(12), TimeSpan.FromSeconds(3)));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToPositiveWithNegation() =>
-            Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.Not(Um.Is.IsCloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(1))));
+            Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.Not(Um.Is.CloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(1))));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.IsCloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(1)));
+                Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.CloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(1)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToNegativeSwap() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(TimeSpan.FromSeconds(14), Um.Is.IsCloseTo(TimeSpan.FromSeconds(12), TimeSpan.FromSeconds(1)));
+                Uv.Assert.That(TimeSpan.FromSeconds(14), Um.Is.CloseTo(TimeSpan.FromSeconds(12), TimeSpan.FromSeconds(1)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherTimeSpanIsCloseToNegativeWithNegation() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.Not(Um.Is.IsCloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(3))));
+                Uv.Assert.That(TimeSpan.FromSeconds(12), Um.Is.Not(Um.Is.CloseTo(TimeSpan.FromSeconds(14), TimeSpan.FromSeconds(3))));
             });
 
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToPositive() =>
-            Uv.Assert.That(DateTime.Now.AddSeconds(12), Um.Is.IsCloseTo(DateTime.Now.AddSeconds(14), TimeSpan.FromSeconds(3)));
+            Uv.Assert.That(DateTime.Now.AddSeconds(12), Um.Is.CloseTo(DateTime.Now.AddSeconds(14), TimeSpan.FromSeconds(3)));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToPositiveSwap() =>
-            Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.IsCloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(3)));
+            Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.CloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(3)));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToPositiveWithNegation() =>
-            Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.Not(Um.Is.IsCloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(1))));
+            Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.Not(Um.Is.CloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(1))));
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.IsCloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(1)));
+                Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.CloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(1)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToNegativeSwap() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(DateTime.Now.AddSeconds(12), Um.Is.IsCloseTo(DateTime.Now.AddSeconds(14), TimeSpan.FromSeconds(1)));
+                Uv.Assert.That(DateTime.Now.AddSeconds(12), Um.Is.CloseTo(DateTime.Now.AddSeconds(14), TimeSpan.FromSeconds(1)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherDateTimeIsCloseToNegativeWithNegation() =>
             Assert.Throws<Uv.AssertionException>(delegate
             {
-                Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.Not(Um.Is.IsCloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(3))));
+                Uv.Assert.That(DateTime.Now.AddSeconds(14), Um.Is.Not(Um.Is.CloseTo(DateTime.Now.AddSeconds(12), TimeSpan.FromSeconds(3))));
             });
 
         #endregion
