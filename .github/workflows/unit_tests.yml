@@ -31,7 +31,7 @@ jobs:
       - name: Test
         run: dotnet test ./src/Unicorn.UnitTests/Unicorn.UnitTests.csproj --configuration Release --framework net5.0 --verbosity normal --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
       - name: Upload dotnet test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dotnet-results-${{ matrix.dotnet-version }}
           path: TestResults-${{ matrix.dotnet-version }}
