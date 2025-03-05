@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using Unicorn.UnitTests.BO;
 using Um = Unicorn.Taf.Core.Verification.Matchers;
 using Uv = Unicorn.Taf.Core.Verification;
@@ -63,5 +64,31 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
                 Uv.Assert.IsFalse(value.Equals(value));
             });
         }
+
+        #region Throws
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestAssertThrowsPositive() =>
+            Uv.Assert.Throws<ArgumentException>(() => throw new ArgumentException());
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestAssertThrowsNegative()
+        {
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                Uv.Assert.Throws<ArgumentException>(() => throw new ArithmeticException());
+            });
+        }
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestAssertThrowsNegativeNoException()
+        {
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                Uv.Assert.Throws<ArgumentException>(() => Assert.IsTrue(true));
+            });
+        }
+
+        #endregion
     }
 }

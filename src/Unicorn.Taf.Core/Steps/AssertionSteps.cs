@@ -27,11 +27,11 @@ namespace Unicorn.Taf.Core.Steps
         /// <typeparam name="T">Any type</typeparam>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
-        /// <param name="errorMessage">message thrown on fail</param>
-        [Step("Assert that '{0}' {1}")]
+        /// <param name="message">message thrown on fail</param>
+        [Step("Assert that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void AssertThat<T>(T actual, TypeSafeMatcher<T> matcher, string errorMessage) =>
-            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, errorMessage), actual, matcher, errorMessage);
+        public void AssertThat<T>(T actual, TypeSafeMatcher<T> matcher, string message) =>
+            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, message), actual, matcher, message);
 
         /// <summary>
         /// Step which performs assertion on object of any type using type specific matcher 
@@ -40,7 +40,7 @@ namespace Unicorn.Taf.Core.Steps
         /// <typeparam name="T">Any type</typeparam>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
-        [Step("Assert that '{0}' {1}")]
+        [Step("Assert that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void AssertThat<T>(T actual, TypeSafeMatcher<T> matcher) =>
             StepsUtilities.WrapStep(() => Assert.That(actual, matcher), actual, matcher);
@@ -53,9 +53,9 @@ namespace Unicorn.Taf.Core.Steps
         /// <typeparam name="T">Any type</typeparam>
         /// <param name="actual">collection of objects to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
-        /// <param name="errorMessage">message thrown on fail</param>
-        public void AssertThat<T>(IEnumerable<T> actual, TypeSafeCollectionMatcher<T> matcher, string errorMessage) =>
-            ReportedCollectionAssertThat(typeof(T).Name, matcher, actual, errorMessage);
+        /// <param name="message">message thrown on fail</param>
+        public void AssertThat<T>(IEnumerable<T> actual, TypeSafeCollectionMatcher<T> matcher, string message) =>
+            ReportedCollectionAssertThat(typeof(T).Name, matcher, actual, message);
 
         /// <summary>
         /// Step which performs assertion on collection of objects of same type using matcher 
@@ -73,11 +73,11 @@ namespace Unicorn.Taf.Core.Steps
         /// </summary>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeUnsafeMatcher"/> instance</param>
-        /// <param name="errorMessage">message thrown on fail</param>
-        [Step("Assert that '{0}' {1}")]
+        /// <param name="message">message thrown on fail</param>
+        [Step("Assert that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void AssertThat(object actual, TypeUnsafeMatcher matcher, string errorMessage) =>
-            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, errorMessage), actual, matcher, errorMessage);
+        public void AssertThat(object actual, TypeUnsafeMatcher matcher, string message) =>
+            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, message), actual, matcher, message);
 
         /// <summary>
         /// Perform assertion on object of any type using matcher 
@@ -85,10 +85,30 @@ namespace Unicorn.Taf.Core.Steps
         /// </summary>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeUnsafeMatcher"/> instance</param>
-        [Step("Assert that '{0}' {1}")]
+        [Step("Assert that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void AssertThat(object actual, TypeUnsafeMatcher matcher) =>
             StepsUtilities.WrapStep(() => Assert.That(actual, matcher), actual, matcher);
+
+        /// <summary>
+        /// Perform assertion on action to check for expected exception is thrown.
+        /// </summary>
+        /// <param name="action">action to perform</param>
+        /// <param name="message">message thrown on fail</param>
+        /// <typeparam name="T">Expected exception type</typeparam>
+        [Step("{1}")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void AssertThrows<T>(Action action, string message) =>
+            StepsUtilities.WrapStep(() => Assert.Throws<T>(action, message), action, message);
+
+        /// <summary>
+        /// Perform assertion on action to check for expected exception is thrown.
+        /// </summary>
+        /// <param name="action">action to perform</param>
+        /// <typeparam name="T">Expected exception type</typeparam>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void AssertThrows<T>(Action action) =>
+            ReportableAssertThrows<T>(action, typeof(T));
 
         /// <summary>
         /// Initializes assertions chain.
@@ -119,7 +139,7 @@ namespace Unicorn.Taf.Core.Steps
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
         /// <returns>current assertion steps instance</returns>
-        [Step("Verify that '{0}' {1}")]
+        [Step("Verify that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public AssertionSteps VerifyThat<T>(T actual, TypeSafeMatcher<T> matcher) =>
             StepsUtilities.WrapStep(() =>
@@ -140,11 +160,11 @@ namespace Unicorn.Taf.Core.Steps
         /// <typeparam name="T">Any type</typeparam>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
-        /// <param name="errorMessage">error message displayed on fail</param>
+        /// <param name="message">error message displayed on fail</param>
         /// <returns>current assertion steps instance</returns>
-        [Step("Verify that '{0}' {1}")]
+        [Step("Verify that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public AssertionSteps VerifyThat<T>(T actual, TypeSafeMatcher<T> matcher, string errorMessage) =>
+        public AssertionSteps VerifyThat<T>(T actual, TypeSafeMatcher<T> matcher, string message) =>
             StepsUtilities.WrapStep(() =>
             {
                 if (_chaninAssert == null)
@@ -152,9 +172,9 @@ namespace Unicorn.Taf.Core.Steps
                     _chaninAssert = new ChainAssert();
                 }
 
-                _chaninAssert.That(actual, matcher, errorMessage);
+                _chaninAssert.That(actual, matcher, message);
                 return this;
-            }, actual, matcher, errorMessage);
+            }, actual, matcher, message);
 
         /// <summary>
         /// Step which performs soft check on object of any type using matcher 
@@ -163,7 +183,7 @@ namespace Unicorn.Taf.Core.Steps
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeUnsafeMatcher"/> instance</param>
         /// <returns>current assertion steps instance</returns>
-        [Step("Verify that '{0}' {1}")]
+        [Step("Verify that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public AssertionSteps VerifyThat(object actual, TypeUnsafeMatcher matcher) =>
             StepsUtilities.WrapStep(() =>
@@ -183,11 +203,11 @@ namespace Unicorn.Taf.Core.Steps
         /// </summary>
         /// <param name="actual">object to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeUnsafeMatcher"/> instance</param>
-        /// <param name="errorMessage">error message displayed on fail</param>
+        /// <param name="message">error message displayed on fail</param>
         /// <returns>current assertion steps instance</returns>
-        [Step("Verify that '{0}' {1}")]
+        [Step("Verify that {0} {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public AssertionSteps VerifyThat(object actual, TypeUnsafeMatcher matcher, string errorMessage) =>
+        public AssertionSteps VerifyThat(object actual, TypeUnsafeMatcher matcher, string message) =>
             StepsUtilities.WrapStep(() =>
             {
                 if (_chaninAssert == null)
@@ -195,9 +215,9 @@ namespace Unicorn.Taf.Core.Steps
                     _chaninAssert = new ChainAssert();
                 }
 
-                _chaninAssert.That(actual, matcher, errorMessage);
+                _chaninAssert.That(actual, matcher, message);
                 return this;
-            }, actual, matcher, errorMessage);
+            }, actual, matcher, message);
 
         /// <summary>
         /// Step which performs assertion on collection of objects of same type using matcher 
@@ -225,16 +245,16 @@ namespace Unicorn.Taf.Core.Steps
         /// <typeparam name="T">Any type</typeparam>
         /// <param name="actual">collection of objects to perform assertion on</param>
         /// <param name="matcher"><see cref="TypeSafeMatcher{T}"/> instance</param>
-        /// <param name="errorMessage">error message displayed on fail</param>
+        /// <param name="message">error message displayed on fail</param>
         /// <returns>current assertion steps instance</returns>
-        public AssertionSteps VerifyThat<T>(IEnumerable<T> actual, TypeSafeCollectionMatcher<T> matcher, string errorMessage)
+        public AssertionSteps VerifyThat<T>(IEnumerable<T> actual, TypeSafeCollectionMatcher<T> matcher, string message)
         {
             if (_chaninAssert == null)
             {
                 _chaninAssert = new ChainAssert();
             }
 
-            ReportedCollectionVerifyThat(typeof(T).Name, matcher, actual, errorMessage);
+            ReportedCollectionVerifyThat(typeof(T).Name, matcher, actual, message);
             return this;
         }
 
@@ -264,35 +284,32 @@ namespace Unicorn.Taf.Core.Steps
             });
 
         [Step("Assert that collection of <{0}> {1}")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", 
-            Justification = "'elementType' is used just for automatic reporting ")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ReportedCollectionAssertThat<T>(
-            string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string errorMessage) =>
-            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, errorMessage), elementType, matcher, actual, errorMessage);
+        private static void ReportedCollectionAssertThat<T>(
+            string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string message) =>
+            StepsUtilities.WrapStep(() => Assert.That(actual, matcher, message), elementType, matcher, actual, message);
 
         [Step("Assert that collection of <{0}> {1}")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", 
-            Justification = "'elementType' is used just for automatic reporting ")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ReportedCollectionAssertThat<T>(
+        private static void ReportedCollectionAssertThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual) =>
             StepsUtilities.WrapStep(() => Assert.That(actual, matcher), elementType, matcher, actual);
 
         [Step("Assert that collection of <{0}> {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", 
-            Justification = "'elementType' is used just for automatic reporting ")]
         private void ReportedCollectionVerifyThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual) =>
             StepsUtilities.WrapStep(() => _chaninAssert.That(actual, matcher), elementType, matcher, actual);
 
         [Step("Assert that collection of <{0}> {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", 
-            Justification = "'elementType' is used just for automatic reporting ")]
         private void ReportedCollectionVerifyThat<T>(
-            string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string errorMessage) =>
-            StepsUtilities.WrapStep(() => _chaninAssert.That(actual, matcher, errorMessage), elementType, matcher, actual, errorMessage);
+            string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string message) =>
+            StepsUtilities.WrapStep(() => _chaninAssert.That(actual, matcher, message), elementType, matcher, actual, message);
+
+        [Step("Assert that action throws {1} exception")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void ReportableAssertThrows<T>(Action action, Type type) =>
+            StepsUtilities.WrapStep(() => Assert.Throws<T>(action), action, type);
     }
 }

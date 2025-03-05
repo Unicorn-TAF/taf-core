@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Unicorn.Taf.Core.Verification.Matchers;
 using Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers;
 
@@ -24,7 +25,12 @@ namespace Unicorn.Taf.Core.Verification
         {
             if (!condition)
             {
-                throw new AssertionException(message);
+                StringBuilder error = new StringBuilder()
+                    .AppendLine(message)
+                    .Append(Expected).AppendLine("true")
+                    .Append(But).AppendLine("was false");
+
+                throw new AssertionException(error.ToString());
             }
         }
 
@@ -45,7 +51,12 @@ namespace Unicorn.Taf.Core.Verification
         {
             if (condition)
             {
-                throw new AssertionException(message);
+                StringBuilder error = new StringBuilder()
+                    .AppendLine(message)
+                    .Append(Expected).AppendLine("false")
+                    .Append(But).AppendLine("was true");
+
+                throw new AssertionException(error.ToString());
             }
         }
 
@@ -176,6 +187,51 @@ namespace Unicorn.Taf.Core.Verification
         /// <exception cref="AssertionException">is thrown when assertion was failed</exception>
         public static void That<T>(IEnumerable<T> actual, TypeSafeCollectionMatcher<T> matcher) => 
             That(actual, matcher, DefaultFailMessage);
+
+        /// <summary>
+        /// Perform assertion on expected exception thrown while executing desired action.
+        /// </summary>
+        /// <typeparam name="T">expected exception type</typeparam>
+        /// <param name="action"><see cref="Action"/> to be executed</param>
+        /// <param name="message">high level message thrown on fail</param>
+        /// <exception cref="AssertionException">is thrown when assertion was failed</exception>
+        public static void Throws<T>(Action action, string message)
+        {
+            string actual;
+
+            try
+            {
+                action();
+                actual = "was no any exception thrown";
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType().Equals(typeof(T)))
+                {
+                    return;
+                }
+                else
+                {
+                    actual = "was " + ex.GetType().FullName;
+                }
+            }
+
+            StringBuilder error = new StringBuilder()
+                .AppendLine(message)
+                .Append(Expected).AppendLine(typeof(T).FullName)
+                .Append(But).AppendLine(actual);
+
+            Fail(error.ToString());
+        }
+
+        /// <summary>
+        /// Perform assertion on expected exception thrown while executing desired action.
+        /// </summary>
+        /// <typeparam name="T">expected exception type</typeparam>
+        /// <param name="action"><see cref="Action"/> to be executed</param>
+        /// <exception cref="AssertionException">is thrown when assertion was failed</exception>
+        public static void Throws<T>(Action action) =>
+            Throws<T>(action, DefaultFailMessage);
 
         /// <summary>
         /// Throws <see cref="AssertionException"/> with specified message.

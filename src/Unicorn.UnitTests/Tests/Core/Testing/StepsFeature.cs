@@ -42,7 +42,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             new TestsRunner(Assembly.GetExecutingAssembly(), false).RunTests();
             Assert.That(
                 Output, 
-                Is.EqualTo("Test1AfterTestAssert that 'Test2' Is equal to Test2AfterTestAfterSuite"));
+                Is.EqualTo("Test1AfterTestAssert that Test2 Is equal to Test2AfterTestAfterSuite"));
         }
 
         [Author("Vitaliy Dobriyan")]
