@@ -32,7 +32,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Error(string message, params object[] parameters) =>
-            Log(ErrorPrefix, string.Format(message, parameters));
+            Log(ErrorPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with warning level.
@@ -40,7 +40,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Warn(string message, params object[] parameters) =>
-            Log(WarningPrefix, string.Format(message, parameters));
+            Log(WarningPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with informational level.
@@ -48,7 +48,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Info(string message, params object[] parameters) =>
-            Log(InfoPrefix, string.Format(message, parameters));
+            Log(InfoPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with debug level.
@@ -56,7 +56,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Debug(string message, params object[] parameters) =>
-            Log(DebugPrefix, string.Format(message, parameters));
+            Log(DebugPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with trace level.
@@ -64,12 +64,20 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Trace(string message, params object[] parameters) =>
-            Log(TracePrefix, string.Format(message, parameters));
+            Log(TracePrefix, message, parameters);
 
-        private void Log(string prefix, string message)
+        private void Log(string prefix, string message, object[] parameters)
         {
             string timestamp = DateTime.Now.ToString(DtFormat, CultureInfo.InvariantCulture);
-            Console.WriteLine($"{timestamp} {prefix}{message}");
+
+            if (parameters.Length == 0)
+            {
+                Console.WriteLine($"{timestamp} {prefix}{message}");
+            }
+            else
+            {
+                Console.WriteLine($"{timestamp} {prefix}{string.Format(message, parameters)}");
+            }
         }
     }
 }
