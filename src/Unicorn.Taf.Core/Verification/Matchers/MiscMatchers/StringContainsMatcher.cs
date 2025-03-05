@@ -19,7 +19,7 @@
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Contains substring '{_objectToCompare}'";
+        public override string CheckDescription => $"contains substring '{_objectToCompare}'";
 
         /// <summary>
         /// Checks if target string contains specified sub-string.

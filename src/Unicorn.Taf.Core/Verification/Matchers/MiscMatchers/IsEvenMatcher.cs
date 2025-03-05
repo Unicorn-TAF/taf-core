@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => "Is even number";
+        public override string CheckDescription => "is even number";
 
         /// <summary>
         /// Checks if target number is even.

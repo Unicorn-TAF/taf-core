@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => "Is equal to " + _objectToCompare;
+        public override string CheckDescription => "is equal to " + _objectToCompare;
 
         /// <summary>
         /// Checks if object is equal to expected one.

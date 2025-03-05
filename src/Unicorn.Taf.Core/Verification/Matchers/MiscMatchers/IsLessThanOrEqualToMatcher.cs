@@ -21,7 +21,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.MiscMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Is less than or equal to {_compareTo}";
+        public override string CheckDescription => $"is less than or equal to {_compareTo}";
 
         /// <summary>
         /// Checks if <see cref="IComparable"/> is less than or equal to other.

@@ -24,7 +24,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
         /// Gets check description
         /// </summary>
         public override string CheckDescription =>
-            "Is equal to collection: [" + DescribeCollection(_expectedObjects, 200) + "]";
+            "is equal to collection: [" + DescribeCollection(_expectedObjects, 200) + "]";
 
         /// <summary>
         /// Checks if collection is equal to specified one

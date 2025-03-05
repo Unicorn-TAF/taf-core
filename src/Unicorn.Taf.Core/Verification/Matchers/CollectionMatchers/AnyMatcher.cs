@@ -23,7 +23,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
         /// <summary>
         /// Gets check description
         /// </summary>
-        public override string CheckDescription => $"Any of elements {_matcher.CheckDescription}";
+        public override string CheckDescription => $"any of elements {_matcher.CheckDescription}";
 
         /// <summary>
         /// Checks if any collection item satisfies main matcher check.

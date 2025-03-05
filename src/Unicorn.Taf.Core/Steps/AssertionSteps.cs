@@ -283,25 +283,25 @@ namespace Unicorn.Taf.Core.Steps
                 }
             });
 
-        [Step("Assert that collection of <{0}> {1}")]
+        [Step("Assert that collection of [{0}] {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ReportedCollectionAssertThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string message) =>
             StepsUtilities.WrapStep(() => Assert.That(actual, matcher, message), elementType, matcher, actual, message);
 
-        [Step("Assert that collection of <{0}> {1}")]
+        [Step("Assert that collection of [{0}] {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ReportedCollectionAssertThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual) =>
             StepsUtilities.WrapStep(() => Assert.That(actual, matcher), elementType, matcher, actual);
 
-        [Step("Assert that collection of <{0}> {1}")]
+        [Step("Assert that collection of [{0}] {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ReportedCollectionVerifyThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual) =>
             StepsUtilities.WrapStep(() => _chaninAssert.That(actual, matcher), elementType, matcher, actual);
 
-        [Step("Assert that collection of <{0}> {1}")]
+        [Step("Assert that collection of [{0}] {1}")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ReportedCollectionVerifyThat<T>(
             string elementType, TypeSafeCollectionMatcher<T> matcher, IEnumerable<T> actual, string message) =>

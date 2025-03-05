@@ -22,7 +22,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Collection has {_expectedCount} items";
+        public override string CheckDescription => $"has {_expectedCount} items";
 
         /// <summary>
         /// Checks if collection contains specified items count.

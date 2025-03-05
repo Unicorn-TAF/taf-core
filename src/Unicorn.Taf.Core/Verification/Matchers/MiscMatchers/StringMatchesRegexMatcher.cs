@@ -21,7 +21,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.MiscMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Matches regex '{_regex}'";
+        public override string CheckDescription => $"matches regex '{_regex}'";
 
         /// <summary>
         /// Checks if target string matches specified regex.

@@ -15,7 +15,7 @@
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => "Is null";
+        public override string CheckDescription => "is null";
 
         /// <summary>
         /// Checks if object is null.

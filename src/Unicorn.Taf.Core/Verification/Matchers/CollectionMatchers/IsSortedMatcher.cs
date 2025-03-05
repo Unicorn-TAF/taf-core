@@ -22,7 +22,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => "Is sorted " + (_ascending ? "ascending" : "descending");
+        public override string CheckDescription => "is sorted " + (_ascending ? "ascending" : "descending");
 
         /// <summary>
         /// Checks if collection is sorted in desired direction.

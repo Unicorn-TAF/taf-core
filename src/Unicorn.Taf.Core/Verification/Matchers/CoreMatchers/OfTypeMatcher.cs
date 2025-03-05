@@ -20,7 +20,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Is of {_expectedType.FullName} type";
+        public override string CheckDescription => $"is of {_expectedType.FullName} type";
 
         /// <summary>
         /// Checks if object is of expected type.

@@ -24,7 +24,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.MiscMatchers
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => $"Is close to {_compareTo} (with epsilon {_epsilon})";
+        public override string CheckDescription => $"is close to {_compareTo} (with epsilon {_epsilon})";
 
         /// <summary>
         /// Checks if <see cref="TimeSpan"/> is close enough to other considering epsilon.
