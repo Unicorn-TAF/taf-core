@@ -44,7 +44,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
                 .TrimOutputTo(1000)
                 .UseItemsBulletsInOutput(">");
 
-            bool result = comparer.AreSequenceEqualTo(actual, _expected);
+            bool result = comparer.AreSequenceEqual(actual, _expected);
             DescribeMismatch(Environment.NewLine + comparer.Output);
             return result;
         }

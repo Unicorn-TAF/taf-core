@@ -24,7 +24,7 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
                 .UseItemsBulletsInOutput(" ");
 
             string diff = "AreSequenceEqualTo" + Environment.NewLine;
-            comparer.AreSequenceEqualTo(new[] { 1, 2, 3, 4, }, new[] { 1, 2, 5, 4, 6 });
+            comparer.AreSequenceEqual(new[] { 1, 2, 3, 4, }, new[] { 1, 2, 5, 4, 6 });
             diff += comparer.Output + Environment.NewLine + new string('-', 60) + Environment.NewLine + Environment.NewLine;
 
             diff += "AreTheSame" + Environment.NewLine;

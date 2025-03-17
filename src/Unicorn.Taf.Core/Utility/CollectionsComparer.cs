@@ -12,7 +12,7 @@ namespace Unicorn.Taf.Core.Utility
     ///  - contains
     ///  - does not contain
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">collections items types</typeparam>
     public class CollectionsComparer<T>
     {
         private const string NotExpected = "Not expected items >>";
@@ -55,7 +55,7 @@ namespace Unicorn.Taf.Core.Utility
         /// <param name="actual">actual items collection</param>
         /// <param name="expected">expected items collection</param>
         /// <returns>true if actual collection is sequence equal to another; otherwise - false</returns>
-        public bool AreSequenceEqualTo(IEnumerable<T> actual, IEnumerable<T> expected)
+        public bool AreSequenceEqual(IEnumerable<T> actual, IEnumerable<T> expected)
         {
             StringBuilder diff = new StringBuilder();
 
@@ -220,15 +220,13 @@ namespace Unicorn.Taf.Core.Utility
 
             foreach (T item in second)
             {
-                int hits;
-                dict.TryGetValue(item, out hits);
+                dict.TryGetValue(item, out int hits);
                 dict[item] = hits + 1;
             }
 
             foreach (T item in first)
             {
-                int hits;
-                dict.TryGetValue(item, out hits);
+                dict.TryGetValue(item, out int hits);
                 if (hits > 0)
                 {
                     yield return item;
