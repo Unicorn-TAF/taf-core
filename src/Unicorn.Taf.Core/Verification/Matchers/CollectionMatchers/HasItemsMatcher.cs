@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Unicorn.Taf.Core.Utility;
 
 namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
 {
@@ -39,13 +40,24 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
                 return Reverse;
             }
 
-            var mismatchItems = Reverse ?
-                actual.Where(i => _expectedObjects.Contains(i)) :
-                _expectedObjects.Where(i => !actual.Contains(i));
+            CollectionsComparer<T> comparer = new CollectionsComparer<T>()
+                .TrimOutputTo(1000)
+                .UseItemsBulletsInOutput(">");
 
-            DescribeMismatch($"items {(Reverse ? "" : "not ")}presented: {string.Join(", ", mismatchItems)}");
+            bool result;
 
-            return mismatchItems.Any() ? Reverse : !Reverse;
+            if (Reverse)
+            {
+                result = !comparer.NotContains(actual, _expectedObjects);
+                DescribeMismatch(Environment.NewLine + comparer.Output);
+            }
+            else
+            {
+                result = comparer.Contains(actual, _expectedObjects);
+                DescribeMismatch(Environment.NewLine + comparer.Output);
+            }
+
+            return result;
         }
     }
 }

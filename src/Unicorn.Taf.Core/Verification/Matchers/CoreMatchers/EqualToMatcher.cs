@@ -1,4 +1,6 @@
-﻿namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
+﻿using System;
+
+namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
 {
     /// <summary>
     /// Matcher to check if object is equal to expected one. 
@@ -20,7 +22,7 @@
         /// <summary>
         /// Gets check description.
         /// </summary>
-        public override string CheckDescription => "is equal to " + _objectToCompare;
+        public override string CheckDescription => $"is equal to '{_objectToCompare}'";
 
         /// <summary>
         /// Checks if object is equal to expected one.
@@ -35,7 +37,17 @@
                 return Reverse;
             }
 
-            DescribeMismatch(actual.ToString());
+            // Enhanced outputs for strings
+            if (actual is string && !Reverse)
+            {
+                string diff = MatchersUtils.GetStringsDiff(actual.ToString(), _objectToCompare.ToString());
+                DescribeMismatch(Environment.NewLine + diff);
+            }
+            else
+            {
+                DescribeMismatch(actual.ToString());
+            }
+
             return actual.Equals(_objectToCompare);
         }
     }

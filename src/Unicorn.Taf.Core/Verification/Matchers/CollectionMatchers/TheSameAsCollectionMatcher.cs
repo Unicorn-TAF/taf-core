@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Unicorn.Taf.Core.Utility;
 
 namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
 {
@@ -39,33 +40,13 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
                 return Reverse;
             }
 
-            var counts = _expectedObjects
-                .GroupBy(v => v)
-                .ToDictionary(g => g.Key, g => g.Count());
-            var ok = true;
+            CollectionsComparer<T> comparer = new CollectionsComparer<T>()
+                .TrimOutputTo(1000)
+                .UseItemsBulletsInOutput(">");
 
-            foreach (var n in actual)
-            {
-                int c;
-                if (counts.TryGetValue(n, out c))
-                {
-                    counts[n] = c - 1;
-                }
-                else
-                {
-                    ok = false;
-                    break;
-                }
-            }
-
-            var areEqual = ok && counts.Values.All(c => c == 0);
-
-            if (areEqual == Reverse)
-            {
-                DescribeMismatch(DescribeCollection(actual, 1000));
-            }
-
-            return areEqual;
+            bool result = comparer.AreTheSame(actual, _expectedObjects);
+            DescribeMismatch(Environment.NewLine + comparer.Output);
+            return result;
         }
     }
 }
