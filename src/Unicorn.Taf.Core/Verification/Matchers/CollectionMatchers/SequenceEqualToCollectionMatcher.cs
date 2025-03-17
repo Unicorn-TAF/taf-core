@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Unicorn.Taf.Core.Utility;
 
 namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
 {
@@ -39,8 +40,13 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CollectionMatchers
                 return Reverse;
             }
 
-            DescribeMismatch(DescribeCollection(actual, 1000));
-            return actual.SequenceEqual(_expected);
+            CollectionsComparer<T> comparer = new CollectionsComparer<T>()
+                .TrimOutputTo(1000)
+                .UseItemsBulletsInOutput(">");
+
+            bool result = comparer.AreSequenceEqual(actual, _expected);
+            DescribeMismatch(Environment.NewLine + comparer.Output);
+            return result;
         }
     }
 }
