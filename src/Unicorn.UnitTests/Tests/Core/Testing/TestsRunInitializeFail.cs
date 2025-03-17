@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Unicorn.Taf.Core.Engine;
@@ -34,7 +33,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
 
             Assert.IsFalse(runner.Outcome.RunInitialized);
             Assert.That(runner.Outcome.RunStatus, Is.EqualTo(Status.Failed));
-            Assert.That(runner.Outcome.RunnerException.GetType(), Is.EqualTo(typeof(InvalidOperationException)));
+            Assert.That(runner.Outcome.InitFailMessage, Is.EqualTo("Run init failed"));
             Assert.That(runner.Outcome.SuitesOutcomes.Count, Is.EqualTo(0));
         }
 
@@ -47,7 +46,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
 
             Assert.IsFalse(runner.Outcome.RunInitialized);
             Assert.That(runner.Outcome.RunStatus, Is.EqualTo(Status.Failed));
-            Assert.That(runner.Outcome.RunnerException.GetType(), Is.EqualTo(typeof(InvalidOperationException)));
+            Assert.That(runner.Outcome.InitFailMessage, Is.EqualTo("Run init failed"));
             Assert.That(runner.Outcome.SuitesOutcomes.Count, Is.EqualTo(0));
         }
     }

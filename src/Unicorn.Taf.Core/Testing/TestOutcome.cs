@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Unicorn.Taf.Core.Testing
 {
@@ -12,11 +11,6 @@ namespace Unicorn.Taf.Core.Testing
     [Serializable]
     public class TestOutcome
     {
-        private readonly StringBuilder _output;
-
-        [NonSerialized]
-        private Exception exception;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TestOutcome"/> class.
         /// </summary>
@@ -24,7 +18,6 @@ namespace Unicorn.Taf.Core.Testing
         {
             ExecutionTime = TimeSpan.FromSeconds(0);
             Attachments = new List<Attachment>();
-            _output = new StringBuilder();
         }
 
         /// <summary>
@@ -73,34 +66,19 @@ namespace Unicorn.Taf.Core.Testing
         public TimeSpan ExecutionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets fail exception details. Has value only when test has failed.
+        /// Gets or sets fail exception message.
         /// </summary>
-        public Exception Exception 
-        {
-            get => exception;
-
-            set
-            {
-                exception = value;
-                FailMessage = exception.Message;
-                FailStackTrace = exception.StackTrace;
-            }
-        }
+        public string FailMessage { get; set; }
 
         /// <summary>
-        /// Gets fail exception message.
+        /// Gets or sets fail exception stack trace.
         /// </summary>
-        public string FailMessage { get; internal set; }
+        public string FailStackTrace { get; set; }
 
         /// <summary>
-        /// Gets fail exception stack trace.
+        /// Gets or sets list of test attachments.
         /// </summary>
-        public string FailStackTrace { get; private set; }
-
-        /// <summary>
-        /// Gets list of test attachments.
-        /// </summary>
-        public List<Attachment> Attachments { get; }
+        public List<Attachment> Attachments { get; set; }
 
         /// <summary>
         /// Gets or sets Array of bugs attached to the test. Has values only when the test failed by bug.
@@ -110,13 +88,13 @@ namespace Unicorn.Taf.Core.Testing
         /// <summary>
         /// Gets or sets test log output string
         /// </summary>
-        public string Output => _output.ToString();
+        public string Output { get; set; }
 
         /// <summary>
         /// Adds new line with specified text to test output.
         /// </summary>
         /// <param name="text">text to add</param>
         public void AppendOutput(string text) =>
-            _output.AppendLine(text);
+            Output += text;
     }
 }

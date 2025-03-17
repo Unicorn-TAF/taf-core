@@ -9,6 +9,11 @@ namespace Unicorn.Taf.Core.Testing
     public class Defect
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Defect"/> class.
+        /// </summary>
+        public Defect() { }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Defect"/> class with specified ID and type
         /// </summary>
         /// <param name="id">defect ID (for example id in BTS)</param>
@@ -33,7 +38,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <summary>
         /// Gets or sets defect id as string
         /// </summary>
-        public string Id { get; protected set; }
+        public string Id { get; set; }
         
         /// <summary>
         /// Gets or sets defect type as string

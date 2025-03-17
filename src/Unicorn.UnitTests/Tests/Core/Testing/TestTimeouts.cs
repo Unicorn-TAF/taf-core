@@ -34,7 +34,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             var outcome = runner.Outcome.SuitesOutcomes.First(o => o.Name.Equals("Suite for timeouts 1", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.That(outcome.FailedTests, Is.EqualTo(1));
-            Assert.That(outcome.TestsOutcomes.First(o => o.Result.Equals(Status.Failed)).Exception.GetType(), Is.EqualTo(typeof(TestTimeoutException)));
+            Assert.That(outcome.TestsOutcomes.First(o => o.Result.Equals(Status.Failed)).FailMessage, Is.EqualTo("Test timeout (00:00:00.5000000) reached"));
         }
 
         [Author("Vitaliy Dobriyan")]

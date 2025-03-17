@@ -28,7 +28,7 @@ namespace Unicorn.Taf.Core.Engine
         /// <summary>
         /// Gets list of <see cref="SuiteOutcome"/> of the current run.
         /// </summary>
-        public List<SuiteOutcome> SuitesOutcomes { get; }
+        public List<SuiteOutcome> SuitesOutcomes { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether launch was initialized without errors (assembly initialization was executed).
@@ -45,8 +45,13 @@ namespace Unicorn.Taf.Core.Engine
             Status.Passed;
 
         /// <summary>
-        /// Gets or sets value representing runner exception in case when assembly initialization was failed.
+        /// Gets or sets launch initialization fail exception message.
         /// </summary>
-        public Exception RunnerException { get; set; } = null;
+        public string InitFailMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets launch initialization fail exception stack trace.
+        /// </summary>
+        public string InitFailStackTrace { get; set; }
     }
 }
