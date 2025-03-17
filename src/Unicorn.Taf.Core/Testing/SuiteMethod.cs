@@ -122,7 +122,8 @@ namespace Unicorn.Taf.Core.Testing
         public void Fail(Exception ex)
         {
             ULog.Error(ex.ToString());
-            Outcome.Exception = ex;
+            Outcome.FailMessage = ex.Message;
+            Outcome.FailStackTrace = ex.StackTrace;
             Outcome.Result = Status.Failed;
         }
 

@@ -66,7 +66,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Assert.That(outcome.FailedTests, Is.EqualTo(1), 
                 "Current test at suite timeout should be failed");
 
-            Assert.That(outcome.TestsOutcomes[0].Exception, Is.TypeOf(typeof(SuiteTimeoutException)),
+            Assert.That(outcome.TestsOutcomes[0].FailMessage, Is.EqualTo("Suite timeout (00:00:00.6250000) reached"),
                 "Outcome of test interrupted by suite timeout does not have right exception");
 
             Assert.That(outcome.SkippedTests, Is.EqualTo(1), 

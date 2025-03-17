@@ -37,7 +37,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <summary>
         /// Gets list of suite tests outcomes
         /// </summary>
-        public List<TestOutcome> TestsOutcomes { get; }
+        public List<TestOutcome> TestsOutcomes { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating overall suite execution result
