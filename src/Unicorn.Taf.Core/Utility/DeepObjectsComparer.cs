@@ -7,19 +7,30 @@ using System.Reflection;
 namespace Unicorn.Taf.Core.Utility
 {
     /// <summary>
-    /// Objects comparer with recursive aproach to check equality of objects considering all their public fields and properties values
+    /// Objects comparer with recursive aproach to check equality of objects considering all their public 
+    /// fields and properties values. Certain fields or properties could be excluded from comparison.
     /// </summary>
     public class DeepObjectsComparer
     {
         private string[] ignorePaths;
         private string bullet;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeepObjectsComparer"/> class.
+        /// </summary>
         public DeepObjectsComparer()
         {
             ignorePaths = new string[0];
             bullet = string.Empty;
         }
 
+        /// <summary>
+        /// Adds paths to fields/properties to ignore during comparison. 
+        /// Field or property which path ends with one of ignore paths will be skipped during comparison.
+        /// Example: SomeObject.SomeField.SomeInnerField
+        /// </summary>
+        /// <param name="ignorePaths"></param>
+        /// <returns></returns>
         public DeepObjectsComparer IgnorePaths(params string[] ignorePaths)
         {
             this.ignorePaths = ignorePaths;
@@ -37,6 +48,15 @@ namespace Unicorn.Taf.Core.Utility
             return this;
         }
 
+        /// <summary>
+        /// Compare two objects with recursive aproach to check their equality considering all public fields 
+        /// and properties values (primitives, objects, IEnumerable fields).
+        /// It there are any ignore paths specified, then fields or properties which paths ends 
+        /// with one of ignore paths will be skipped during comparison.
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <returns>list of differences if any, otherwise - empty list</returns>
         public List<string> CompareObjects(object actual, object expected) =>
             CompareObjects(actual, expected, "");
 
