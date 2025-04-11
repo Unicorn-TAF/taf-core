@@ -15,9 +15,10 @@
         internal const string Reporting = "reporting";
         internal const string TestsCycleDependency = "tests-cycle-dependency";
         internal const string Disabled = "disabled";
+        internal const string DisabledByCondition = "disabled-by-condition";
         internal const string Sample = "sample";
         internal const string ParameterizedBroken = "parameterized-broken";
         internal const string Parameterized = "parameterized";
-        internal const string SuiteParallelizaton = "suite-parallelizaton";
+        internal const string SuiteParallelizaton = "suite-parallelization";
     }
 }

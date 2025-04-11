@@ -143,7 +143,7 @@ namespace Unicorn.Taf.Core.Engine
                     throw new TypeLoadException($"Suite with name '{suiteName}' was not found in tests assembly.");
                 }
 
-                if (suite.IsDefined(typeof(DisabledAttribute)))
+                if (AdapterUtilities.IsSuiteDisabled(suite))
                 {
                     continue;
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Unicorn.Taf.Core.Logging;
 using Unicorn.Taf.Core.Testing.Attributes;
 
 namespace Unicorn.Taf.Core.Testing
@@ -21,7 +22,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <returns>true - if suite needs to be run, otherwise - false</returns>
         public static bool IsSuiteRunnable(Type suiteType)
         {
-            if (suiteType.IsDefined(typeof(DisabledAttribute)))
+            if (IsSuiteDisabled(suiteType))
             {
                 return false;
             }
@@ -50,7 +51,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <returns>true - if test needs to be run, otherwise - false</returns>
         public static bool IsTestRunnable(MethodInfo method)
         {
-            if (!method.IsDefined(typeof(TestAttribute), true) || method.IsDefined(typeof(DisabledAttribute), true))
+            if (!method.IsDefined(typeof(TestAttribute), true) || IsTestDisabled(method))
             {
                 return false;
             }
@@ -69,7 +70,7 @@ namespace Unicorn.Taf.Core.Testing
 
         /// <summary>
         /// Determine if specific test needs to be executed for specified category if:<para/>
-        /// - category is not speicifed (null or empty)
+        /// - category is not specified (null or empty)
         /// - OR one of test categories contains specified category<para/>
         /// </summary>
         /// <param name="method"><see cref="MethodInfo"/> representing the test</param>
@@ -77,7 +78,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <returns></returns>
         public static bool IsTestRunnable(MethodInfo method, string category)
         {
-            if (!method.IsDefined(typeof(TestAttribute), true) || method.IsDefined(typeof(DisabledAttribute), true))
+            if (!method.IsDefined(typeof(TestAttribute), true) || IsTestDisabled(method))
             {
                 return false;
             }
@@ -151,6 +152,78 @@ namespace Unicorn.Taf.Core.Testing
         {
             SuiteAttribute suiteAttribute = suiteType.GetCustomAttribute<SuiteAttribute>(true);
             return string.IsNullOrEmpty(suiteAttribute.Name) ? suiteType.Name : suiteAttribute.Name.Trim();
+        }
+
+        internal static bool IsSuiteDisabled(Type suiteType)
+        {
+            if (suiteType.IsDefined(typeof(DisabledAttribute)))
+            {
+                DisabledAttribute attribute = suiteType.GetCustomAttribute<DisabledAttribute>();
+
+                if (!string.IsNullOrEmpty(attribute.ConditionProperty))
+                {
+                    try
+                    {
+                        PropertyInfo property = suiteType.GetProperty(
+                            attribute.ConditionProperty, BindingFlags.Static | BindingFlags.Public);
+
+                        if (property != null)
+                        {
+                            return (bool)property.GetValue(null);
+                        }
+                    }
+                    catch 
+                    {
+                        ULog.Warn("Unable to check disabled status for suite {0}. " +
+                            "Please check condition (property should be public static bool)", 
+                            suiteType.FullName);
+
+                        return true; 
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        internal static bool IsTestDisabled(MethodInfo testMethod)
+        {
+            if (testMethod.IsDefined(typeof(DisabledAttribute), true))
+            {
+                DisabledAttribute attribute = testMethod.GetCustomAttribute<DisabledAttribute>(true);
+
+                if (!string.IsNullOrEmpty(attribute.ConditionProperty))
+                {
+                    try
+                    {
+                        PropertyInfo property = testMethod.DeclaringType
+                            .GetProperty(attribute.ConditionProperty, BindingFlags.Static | BindingFlags.Public);
+
+                        if (property != null)
+                        {
+                            return (bool)property.GetValue(null);
+                        }
+                    }
+                    catch
+                    {
+                        ULog.Warn("Unable to check disabled status for test {0}. " +
+                            "Please check condition (property should be public static bool)",
+                            testMethod.Name);
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         [Test(Description = "Check that test suite determines correct count of tests inside")]
         public void TestSuitesCountOfTests()
         {
-            Test[] actualTests = (Test[])typeof(Taf.Core.Testing.TestSuite)
+            Test[] actualTests = (Test[])typeof(TestSuite)
                 .GetField("_tests", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(suite);
 
             int testsCount = actualTests.Length;
@@ -94,20 +94,9 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Assert.That(USuiteToBeSkipped.Output, Is.EqualTo(string.Empty));
         }
 
-        [Author("Vitaliy Dobriyan")]
-        [Test(Description = "Test For Suite Disabling")]
-        public void TestSuitesDisabledSuite()
-        {
-            USuiteDisabled.Output = string.Empty;
-            Config.SetSuiteTags(Tag.Disabled);
-            TestsRunner runner = new TestsRunner(Assembly.GetExecutingAssembly(), false);
-            runner.RunTests();
-            Assert.That(USuiteDisabled.Output, Is.EqualTo(string.Empty));
-        }
-
         private SuiteMethod[] GetSuiteMethodListByName(string name)
         {
-            object field = typeof(Taf.Core.Testing.TestSuite)
+            object field = typeof(TestSuite)
                 .GetField(name, BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(suite);
 
