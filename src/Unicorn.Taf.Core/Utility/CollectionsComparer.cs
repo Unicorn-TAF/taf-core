@@ -186,7 +186,7 @@ namespace Unicorn.Taf.Core.Utility
                 StringBuilder diff = new StringBuilder();
                 FillDiffWith(diff, NotExpected, intersection);
                 Truncate(diff);
-                
+
                 Output = diff.ToString();
                 return false;
             }
@@ -208,7 +208,7 @@ namespace Unicorn.Taf.Core.Utility
         {
             diff.Append(title);
 
-            foreach(T item in items)
+            foreach (T item in items)
             {
                 diff.Append(delimiter).Append(item);
             }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Reflection;
-using NUnit.Framework;
 using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Testing;

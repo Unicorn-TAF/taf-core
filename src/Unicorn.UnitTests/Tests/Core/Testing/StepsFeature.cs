@@ -41,7 +41,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
 
             new TestsRunner(Assembly.GetExecutingAssembly(), false).RunTests();
             Assert.That(
-                Output, 
+                Output,
                 Is.EqualTo("Test1AfterTestAssert that Test2 is equal to 'Test2'AfterTestAfterSuite"));
         }
 

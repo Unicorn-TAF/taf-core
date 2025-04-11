@@ -10,7 +10,7 @@ namespace Unicorn.UnitTests.Suites
     public class USuiteWithParameterizedTests
     {
         public static string Output { get; set; }
-        
+
         public static List<DataSet> GetTestData()
         {
             var parameters = new List<DataSet>();

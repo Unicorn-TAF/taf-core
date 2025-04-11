@@ -19,8 +19,8 @@ namespace Unicorn.Taf.Core.Testing
         /// <param name="type">type of suite method (<see cref="SuiteMethodType"/>)</param>
         /// <returns>array of <see cref="SuiteMethod"/> with specified attribute</returns>
         internal static SuiteMethod[] GetSuiteMethodsFrom(
-            TestSuite testSuite, 
-            Type attributeType, 
+            TestSuite testSuite,
+            Type attributeType,
             SuiteMethodType type)
         {
             List<MethodInfo> suiteMethodInfos = testSuite.SuiteInstance.GetType().GetRuntimeMethods()
@@ -148,8 +148,8 @@ namespace Unicorn.Taf.Core.Testing
         }
 
         [SuppressMessage(
-            "Critical Security Hotspot", 
-            "S2245:Using pseudorandom number generators (PRNGs) is security-sensitive", 
+            "Critical Security Hotspot",
+            "S2245:Using pseudorandom number generators (PRNGs) is security-sensitive",
             Justification = "Current usage is safe")]
         private static void ShuffleKeepingDependency(List<MethodInfo> testMethods)
         {

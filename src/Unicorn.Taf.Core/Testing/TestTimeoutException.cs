@@ -31,7 +31,7 @@ namespace Unicorn.Taf.Core.Testing
         /// </summary>
         /// <param name="info">serialization info</param>
         /// <param name="context">streaming context</param>
-        protected TestTimeoutException(SerializationInfo info, StreamingContext context) 
+        protected TestTimeoutException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

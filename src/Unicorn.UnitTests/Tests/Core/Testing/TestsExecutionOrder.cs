@@ -140,7 +140,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
                 Assert.Fail("Expected exception with cycle reference");
             }
             catch (Exception ex)
-            when (ex is StackOverflowException || 
+            when (ex is StackOverflowException ||
             ex is AggregateException ||
             (ex is TargetInvocationException tie && tie.InnerException is StackOverflowException))
             {

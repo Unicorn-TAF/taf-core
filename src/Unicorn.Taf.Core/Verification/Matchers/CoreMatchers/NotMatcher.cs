@@ -34,7 +34,7 @@
                 Output.Append(_matcher.Output);
                 return false;
             }
-            
+
             return true;
         }
     }
