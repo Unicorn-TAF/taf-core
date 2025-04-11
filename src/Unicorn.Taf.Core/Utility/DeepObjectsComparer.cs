@@ -7,8 +7,8 @@ using System.Reflection;
 namespace Unicorn.Taf.Core.Utility
 {
     /// <summary>
-    /// Objects comparer with recursive aproach to check equality of objects considering all their public 
-    /// fields and properties values. Certain fields or properties could be excluded from comparison.
+    /// Objects comparer with recursive approach to check equality of objects considering all their public fields and 
+    /// properties values. It's possible to specify certain fields or properties to exclude them from comparison.
     /// </summary>
     public class DeepObjectsComparer
     {
@@ -49,7 +49,7 @@ namespace Unicorn.Taf.Core.Utility
         }
 
         /// <summary>
-        /// Compare two objects with recursive aproach to check their equality considering all public fields 
+        /// Compare two objects with recursive approach to check their equality considering all public fields 
         /// and properties values (primitives, objects, IEnumerable fields).
         /// It there are any ignore paths specified, then fields or properties which paths ends 
         /// with one of ignore paths will be skipped during comparison.
@@ -210,7 +210,7 @@ namespace Unicorn.Taf.Core.Utility
                 i++;
             }
 
-            // in case if enumerable2 has more items, but reacheed end of enumerable1
+            // in case if enumerable2 has more items, but reached end of enumerable1
             if (en2.MoveNext())
             {
                 differences.Add(GetDiff(newPath, "collection size differs"));
