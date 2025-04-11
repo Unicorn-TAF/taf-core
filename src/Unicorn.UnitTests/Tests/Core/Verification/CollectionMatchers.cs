@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
 using Unicorn.Taf.Core.Verification.Matchers;
 using Unicorn.UnitTests.BO;
 using Um = Unicorn.Taf.Core.Verification.Matchers;
@@ -12,22 +12,22 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
     {
         #region Data
 
-        private readonly string[] hasItemsA = new [] 
+        private readonly string[] hasItemsA = new[]
         {
             "qwerty", "qwerty12", "qwerty123"
         };
 
-        private readonly string[] hasItemsB = new [] 
+        private readonly string[] hasItemsB = new[]
         {
             "qwerty", "qwerty123"
         };
 
-        private readonly string[] hasItemsC = new [] 
+        private readonly string[] hasItemsC = new[]
         {
             "qwerty3", "qwerty1234"
         };
 
-        private readonly string[] hasItemsD = new [] 
+        private readonly string[] hasItemsD = new[]
         {
             "qwerty", "qwerty1234"
         };
@@ -74,7 +74,7 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
             };
 
         private readonly List<float> listForSort2 = new List<float>
-            { 
+            {
                 3f,
                 3f,
                 2f
@@ -114,56 +114,56 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Collection.HasItems(hasItemsD));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsNegative2() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Collection.HasItems(expected3));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsNullNegative3() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Collection.HasItems(hasItemsB));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsWithNotNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.HasItems(hasItemsB)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsWithNotNegative2() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.HasItems(expected1)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsWithNotNegative3() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.HasItems(hasItemsA)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsWithNotNegative4() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.HasItems(hasItemsD)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemsNullWithNotNegative5() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.Not(Collection.HasItems(hasItemsB)));
             });
@@ -233,28 +233,28 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Collection.HasItem("qwerty27"));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemNullNegative2() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Collection.HasItem("qwerty"));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemWithNotNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.HasItem("qwerty")));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherHasItemWithNotNullNegative2() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.Not(Collection.HasItem("qwerty")));
             });
@@ -340,7 +340,7 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsNullOrEmptyNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(hasItemsA, Collection.IsNullOrEmpty());
             });
@@ -355,7 +355,7 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsNullOrEmptyWithNotNegative1() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.Not(Collection.IsNullOrEmpty()));
             });
@@ -411,7 +411,7 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherAnyNullWithNotPositive2() =>
             Uv.Assert.That(hasItemsA, Um.Is.Not(Collection.Any(Um.Is.EqualTo("qwerty4"))));
-        
+
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherAnyNullNegative() =>
             Assert.Throws<Uv.AssertionException>(delegate

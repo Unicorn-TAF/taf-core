@@ -30,14 +30,14 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsNullNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That("a", Um.Is.Null());
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsNullWithNotNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.Not(Um.Is.Null()));
             });
@@ -79,35 +79,35 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToStringWithNotNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That("asd", Um.Is.Not(Um.Is.EqualTo("asd")));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToCustomObjectNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(new SampleObject(), Um.Is.EqualTo(new SampleObject("ds", 234)));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToCustomObjectWithNotNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(new SampleObject(), Um.Is.Not(Um.Is.EqualTo(new SampleObject())));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToNullNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.EqualTo("23"));
             });
 
         [Test, Author("Vitaliy Dobriyan")]
         public void TestMatcherIsEqualToNullWithNotNegative() =>
-            Assert.Throws<Uv.AssertionException>(delegate 
+            Assert.Throws<Uv.AssertionException>(delegate
             {
                 Uv.Assert.That(null, Um.Is.Not(Um.Is.EqualTo("23")));
             });

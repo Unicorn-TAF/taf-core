@@ -39,7 +39,7 @@ namespace Unicorn.Taf.Core.Testing
         /// Gets or sets defect id as string
         /// </summary>
         public string Id { get; set; }
-        
+
         /// <summary>
         /// Gets or sets defect type as string
         /// </summary>

@@ -29,7 +29,7 @@ namespace Unicorn.Taf.Core.Verification
         /// </summary>
         /// <param name="info">serialization info</param>
         /// <param name="context">streaming context</param>
-        protected AssertionException(SerializationInfo info, StreamingContext context) 
+        protected AssertionException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

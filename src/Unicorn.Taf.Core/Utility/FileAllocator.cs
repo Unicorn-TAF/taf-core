@@ -173,8 +173,8 @@ namespace Unicorn.Taf.Core.Utility
 
         private bool ExpectedFileExists()
         {
-            var file = Path.IsPathRooted(expectedFileName) ? 
-                expectedFileName : 
+            var file = Path.IsPathRooted(expectedFileName) ?
+                expectedFileName :
                 Path.Combine(_destinationFolder, expectedFileName);
 
             return File.Exists(file);

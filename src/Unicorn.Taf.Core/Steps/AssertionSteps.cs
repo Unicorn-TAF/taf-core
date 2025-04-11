@@ -128,7 +128,7 @@ namespace Unicorn.Taf.Core.Steps
         /// Initializes assertions chain.
         /// </summary>
         /// <returns>current assertion steps instance</returns>
-        public AssertionSteps StartAssertionsChain() => 
+        public AssertionSteps StartAssertionsChain() =>
             StartAssertionsChain("Assertions chain");
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Unicorn.Taf.Core.Steps
         [Step("Assert verifications chain")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void AssertChain() =>
-            StepsUtilities.WrapStep(() => 
+            StepsUtilities.WrapStep(() =>
             {
                 if (_chaninAssert == null)
                 {
