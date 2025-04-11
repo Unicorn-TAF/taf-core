@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Unicorn.Taf.Core.Utility;
 using Unicorn.Taf.Core.Verification.Matchers;
+using Unicorn.UnitTests.BO;
 using Unicorn.UnitTests.Util;
 using Verify = Unicorn.Taf.Core.Verification;
 
 namespace Unicorn.UnitTests.Tests.Core.Utility
 {
     [TestFixture]
-    public class DebugOutputCollectionsComparerTests : NUnitTestRunner
+    public class DebugComparersOutputTests : NUnitTestRunner
     {
         //[Test] // Need to debug output
         public void TestCollectionsComparerOutput()
@@ -95,5 +96,23 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
 
         private static List<int> IntsCollection(int from, int to) =>
             Enumerable.Range(from, to - from + 1).ToList();
+
+        //[Test]
+        public void TestDeepComparerSeveralDiffer()
+        {
+            var complexObject1 = new ComplexObject() { PublicObjectWithInterface = new Object1() };
+            complexObject1.PublicObjectsListProperty.Add(new InnerObject { PublicString = "a" });
+            complexObject1.PublicInnerObject.PublicDouble = 0.5;
+            complexObject1.PublicNullField = new InnerObject();
+
+            var complexObject2 = new ComplexObject() { PublicObjectWithInterface = new Object2() };
+            complexObject2.PublicObjectsListProperty.Add(new InnerObject { PublicString = "b" });
+            complexObject2.PublicInnerObject.PublicString = "2";
+            complexObject2.PublicStringsListProperty.Add("asd");
+
+            var result = new DeepObjectsComparer().UseItemsBulletsInOutput(">").CompareObjects(complexObject1, complexObject2);
+
+            Assert.Fail(string.Join("\r\n", result));
+        }
     }
 }

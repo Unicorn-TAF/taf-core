@@ -20,6 +20,15 @@ namespace Unicorn.Taf.Core.Verification.Matchers
             new EqualToMatcher<T>(objectToCompare);
 
         /// <summary>
+        /// Matcher to check if actual object is deeply equal to expected one (recursively checks all public fields and properties).
+        /// </summary>
+        /// <typeparam name="T">check items type</typeparam>
+        /// <param name="objectToCompare">expected item to check equality</param>
+        /// <returns><see cref="EqualToMatcher{T}"/> instance</returns>
+        public static DeepEqualToMatcher<T> DeeplyEqualTo<T>(T objectToCompare) =>
+            new DeepEqualToMatcher<T>(objectToCompare);
+
+        /// <summary>
         /// Matcher to check if object is null.
         /// </summary>
         /// <returns><see cref="NullMatcher"/> instance</returns>

@@ -114,6 +114,34 @@ namespace Unicorn.UnitTests.Tests.Core.Verification
 
         #endregion
 
+        #region IsDeeplyEqualTo
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsDeeplyEqualToPositive()
+        {
+            ComplexObject complexObject1 = new ComplexObject();
+            complexObject1.SetProtectedStrings("dsf");
+            ComplexObject complexObject2 = new ComplexObject();
+
+            Uv.Assert.That(complexObject1, Um.Is.DeeplyEqualTo(complexObject2));
+        }
+
+        [Test, Author("Vitaliy Dobriyan")]
+        public void TestMatcherIsDeeplyEqualToNegative()
+        {
+            var complexObject1 = new ComplexObject();
+            complexObject1.PublicObjectsListProperty.Add(new InnerObject { PublicString = "a" });
+            var complexObject2 = new ComplexObject();
+            complexObject2.PublicObjectsListProperty.Add(new InnerObject { PublicString = "b" });
+
+            Assert.Throws<Uv.AssertionException>(delegate
+            {
+                Uv.Assert.That(complexObject1, Um.Is.DeeplyEqualTo(complexObject2));
+            });
+        }
+
+        #endregion
+
         #region IsOfType
 
         [Test, Author("Vitaliy Dobriyan")]
