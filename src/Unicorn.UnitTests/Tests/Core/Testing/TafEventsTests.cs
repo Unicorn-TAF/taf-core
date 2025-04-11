@@ -21,7 +21,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             USuiteForTafEvents.RunMode = runMode;
             USuiteForTafEvents.Output.Clear();
 
-            switch(runMode)
+            switch (runMode)
             {
                 case TafEventsSuiteMode.RunAll:
                     _expectedOutput = GetRunAllExpecteds();

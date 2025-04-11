@@ -38,7 +38,7 @@ namespace Unicorn.Taf.Core.Engine
         /// <summary>
         /// Gets value indicating overall tests run status
         /// </summary>
-        public Status RunStatus => 
+        public Status RunStatus =>
             SuitesOutcomes
             .Any(o => o.Result.Equals(Status.Failed) || o.Result.Equals(Status.Skipped)) || !RunInitialized ?
             Status.Failed :

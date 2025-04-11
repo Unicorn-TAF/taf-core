@@ -20,6 +20,5 @@
         internal const string ParameterizedBroken = "parameterized-broken";
         internal const string Parameterized = "parameterized";
         internal const string SuiteParallelizaton = "suite-parallelization";
-        
     }
 }

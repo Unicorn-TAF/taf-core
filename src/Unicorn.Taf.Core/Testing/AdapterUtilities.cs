@@ -27,7 +27,7 @@ namespace Unicorn.Taf.Core.Testing
                 return false;
             }
 
-            var tags = 
+            var tags =
                 from attribute
                 in suiteType.GetCustomAttributes<TagAttribute>(true)
                 select attribute.Tag.ToUpper().Trim();
@@ -56,11 +56,11 @@ namespace Unicorn.Taf.Core.Testing
                 return false;
             }
 
-            var categories = 
+            var categories =
                 from attribute
                 in method.GetCustomAttributes<CategoryAttribute>(true)
                 select attribute.Category.ToUpper().Trim();
-            
+
             var hasCategoriesToRun = categories.Intersect(Config.RunCategories).Count() == Config.RunCategories.Count;
 
             var fullTestName = GetFullTestMethodName(method);
@@ -112,8 +112,8 @@ namespace Unicorn.Taf.Core.Testing
             var suiteDataMethod = suiteType.GetMethods(BindingFlags.Static | BindingFlags.Public)
                 .FirstOrDefault(m => m.IsDefined(typeof(SuiteDataAttribute), true));
 
-            return suiteDataMethod == null ? 
-                new List<DataSet>() : 
+            return suiteDataMethod == null ?
+                new List<DataSet>() :
                 suiteDataMethod.Invoke(null, null) as List<DataSet>;
         }
 

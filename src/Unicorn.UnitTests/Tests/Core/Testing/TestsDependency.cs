@@ -27,7 +27,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         public void TestDependentTestsDontRun()
         {
             Config.DependentTests = Taf.Core.TestsDependency.DoNotRun;
-            
+
             var runner = new TestsRunner(Assembly.GetExecutingAssembly(), false);
             runner.RunTests();
 
@@ -53,11 +53,11 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Assert.That(testOutcomes.Count, Is.EqualTo(6));
 
             Assert.That(
-                testOutcomes.First(o => o.Title.Equals("Failed test depending on failed test")).Result, 
+                testOutcomes.First(o => o.Title.Equals("Failed test depending on failed test")).Result,
                 Is.EqualTo(Status.Skipped));
 
             Assert.That(
-                testOutcomes.First(o => o.Title.Equals("Test 3")).Result, 
+                testOutcomes.First(o => o.Title.Equals("Test 3")).Result,
                 Is.EqualTo(Status.Skipped));
 
             Assert.That(

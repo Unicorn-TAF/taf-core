@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Reflection;
 using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Testing;
@@ -15,7 +15,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         private static string executionOutput;
 
         private readonly TestSuite _suite = new TestSuite(new UParameterizedSuite());
-        
+
         [OneTimeSetUp]
         public static void Setup()
         {
@@ -69,7 +69,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         {
             string suiteOutputSet1 = "complex object with a = 2>BeforeSuite>BeforeTest>Test1>AfterTest>BeforeTest>Test2>AfterTest>AfterSuite";
             string suiteOutputSet2 = "complex object with b = 3>BeforeSuite>BeforeTest>Test1>AfterTest>BeforeTest>Test2>AfterTest>AfterSuite";
-            
+
             Assert.That(executionOutput, Is.EqualTo(suiteOutputSet1 + suiteOutputSet2));
         }
 
@@ -96,7 +96,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         [Test(Description = "Check that test suite test has different Id for run on each suite DataSet")]
         public void TestParameterizedSuiteTestExecutionsHasDifferentIds()
         {
-            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[0].Id, 
+            Assert.That(runner.Outcome.SuitesOutcomes[0].TestsOutcomes[0].Id,
                 Is.Not.EqualTo(runner.Outcome.SuitesOutcomes[1].TestsOutcomes[0].Id));
         }
 

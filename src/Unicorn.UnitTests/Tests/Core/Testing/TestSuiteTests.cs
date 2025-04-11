@@ -73,7 +73,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
         public void TestSuitesRunSuite()
         {
             USuite.Output = string.Empty;
-            string expectedOutput = 
+            string expectedOutput =
                 "BeforeSuite>BeforeTest>Test1>AfterTest>BeforeTest>Test11>AfterTest>BeforeTest>Test2>AfterTest>AfterSuite";
 
             Config.SetSuiteTags(Tag.Sample);

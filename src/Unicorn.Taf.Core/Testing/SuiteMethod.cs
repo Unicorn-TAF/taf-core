@@ -121,7 +121,7 @@ namespace Unicorn.Taf.Core.Testing
         /// <param name="ex">Exception caught on test execution</param>
         public void Fail(Exception ex)
         {
-            ULog.Error(ex.ToString());
+            ULog.Error("{0}", ex.ToString());
             Outcome.FailMessage = ex.Message;
             Outcome.FailStackTrace = ex.StackTrace;
             Outcome.Result = Status.Failed;
@@ -172,7 +172,7 @@ namespace Unicorn.Taf.Core.Testing
                 {
                     throw new TestTimeoutException($"{MethodType} timeout ({Config.TestTimeout}) reached");
                 }
-                
+
                 Outcome.Result = Status.Passed;
                 TafEvents.CallOnSuiteMethodPass(this);
             }

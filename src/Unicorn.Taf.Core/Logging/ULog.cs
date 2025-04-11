@@ -46,7 +46,6 @@ namespace Unicorn.Taf.Core.Logging
             {
                 Instance.Warn(message, parameters);
             }
-                
         }
 
         /// <summary>

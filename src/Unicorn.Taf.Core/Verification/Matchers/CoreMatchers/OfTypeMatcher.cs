@@ -34,7 +34,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
                 DescribeMismatch("null");
                 return Reverse;
             }
-            
+
             if (actual.GetType() != _expectedType)
             {
                 DescribeMismatch(actual.GetType().FullName);

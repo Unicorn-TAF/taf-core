@@ -29,7 +29,7 @@ namespace Unicorn.Taf.Core.Engine
         /// <param name="testAssembly">assembly with tests</param>
         /// <param name="filters">filters (key: suite name, value: tests categories to run within the suite)</param>
         /// <exception cref="FileNotFoundException">is thrown when tests assembly was not found</exception>
-        public PlaylistRunner(Assembly testAssembly, Dictionary<string, string> filters) 
+        public PlaylistRunner(Assembly testAssembly, Dictionary<string, string> filters)
         {
             if (testAssembly == null)
             {
@@ -122,7 +122,7 @@ namespace Unicorn.Taf.Core.Engine
         private Dictionary<string, Type> CollectSuitesToRun(Assembly assembly)
         {
             Dictionary<string, Type> suitesToRun = new Dictionary<string, Type>();
-             
+
             //As suite entry in filter can contain data set name need to extract pure suites names
             //to filter assembly types by them 
             IEnumerable<string> suiteNames = _filters.Keys.Select(k => GetSuiteNameFromFilter(k));
@@ -135,7 +135,7 @@ namespace Unicorn.Taf.Core.Engine
             {
                 string suiteName = GetSuiteNameFromFilter(filterSuiteName);
 
-                Type suite = filteredSuites.FirstOrDefault(s => 
+                Type suite = filteredSuites.FirstOrDefault(s =>
                     AdapterUtilities.GetSuiteName(s).Equals(suiteName, StringComparison.InvariantCultureIgnoreCase));
 
                 if (suite == null)
@@ -158,6 +158,6 @@ namespace Unicorn.Taf.Core.Engine
         }
 
         private static string GetSuiteNameFromFilter(string filterSuiteName) =>
-            Regex.Split(filterSuiteName, DataSetDelimiter)[0]; 
+            Regex.Split(filterSuiteName, DataSetDelimiter)[0];
     }
 }
