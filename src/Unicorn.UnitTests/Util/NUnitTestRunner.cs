@@ -13,7 +13,7 @@ namespace Unicorn.UnitTests.Util
         /* 
          * For some configurations the file is created in the root of solution instead of dll with build
          * so need to explicitly point to the folder
-        */ 
+        */
         protected static string ConfigName { get; } = Path.Combine(DllFolder, "config.conf");
     }
 }

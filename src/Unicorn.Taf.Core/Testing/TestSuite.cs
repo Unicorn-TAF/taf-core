@@ -71,7 +71,7 @@ namespace Unicorn.Taf.Core.Testing
                 .GetSuiteMethodsFrom(this, typeof(AfterTestAttribute), SuiteMethodType.AfterTest);
             _afterSuites = SuiteUtilities
                 .GetSuiteMethodsFrom(this, typeof(AfterSuiteAttribute), SuiteMethodType.AfterSuite);
-            
+
             _tests = SuiteUtilities.GetTestsFrom(this);
         }
 
@@ -115,7 +115,7 @@ namespace Unicorn.Taf.Core.Testing
         {
             // First need to generate full name including dataset as it influences IDs generation.
             string fullName = string.IsNullOrEmpty(Outcome.DataSetName) ?
-                Outcome.Name : 
+                Outcome.Name :
                 $"{Outcome.Name}[{Outcome.DataSetName}]";
 
             GenerateIds();
@@ -138,7 +138,7 @@ namespace Unicorn.Taf.Core.Testing
             }
 
             RunSuiteMethods(_afterSuites);
-            
+
             ExecutionTimer.Stop();
             Outcome.ExecutionTime = ExecutionTimer.Elapsed;
 
@@ -171,7 +171,7 @@ namespace Unicorn.Taf.Core.Testing
             if (dependsOnAttribute != null)
             {
                 IEnumerable<Test> failedMainTests = _tests
-                    .Where(t => t.Outcome.Result != Status.Passed 
+                    .Where(t => t.Outcome.Result != Status.Passed
                         && t.TestMethod.Name.Equals(dependsOnAttribute.TestMethod));
 
                 if (failedMainTests.Any())
@@ -190,7 +190,7 @@ namespace Unicorn.Taf.Core.Testing
                 }
             }
 
-            Array.ForEach(_beforeTests, 
+            Array.ForEach(_beforeTests,
                 beforeTest => SuiteUtilities.GenerateSuiteMethodIds(beforeTest, Outcome.Id, test.Outcome.Title));
 
             if (skipTests)
@@ -202,7 +202,7 @@ namespace Unicorn.Taf.Core.Testing
                 test.Skip("Suite execution time reached timeout " + Config.SuiteTimeout);
             }
             // If no need to skip all tests and suite timeout not reached run before tests
-            else if (!RunSuiteMethods(_beforeTests)) 
+            else if (!RunSuiteMethods(_beforeTests))
             {
                 test.Skip("BeforeTest was failed");
             }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Reflection;
-using NUnit.Framework;
 using Unicorn.Taf.Core;
 using Unicorn.Taf.Core.Engine;
 using Unicorn.Taf.Core.Testing;
@@ -30,12 +30,12 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Config.SuiteTimeout = TimeSpan.FromMilliseconds(USuiteForTimeouts4.Timeout * 0.5);
             var outcome = RunTestSuite();
 
-            Assert.That(outcome.Result, Is.EqualTo(Status.Skipped), 
+            Assert.That(outcome.Result, Is.EqualTo(Status.Skipped),
                 "Fail of BeforeSuite by timeout should skip suite");
 
             Assert.That(outcome.FailedTests, Is.EqualTo(0), "Skipped suite should have 0 fails");
 
-            Assert.That(outcome.SkippedTests, Is.EqualTo(2), 
+            Assert.That(outcome.SkippedTests, Is.EqualTo(2),
                 "Skipped suite should have all tests skipped");
         }
 
@@ -46,10 +46,10 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Config.SuiteTimeout = TimeSpan.FromMilliseconds(USuiteForTimeouts4.Timeout * 1.5);
             var outcome = RunTestSuite();
 
-            Assert.That(outcome.Result, Is.EqualTo(Status.Failed), 
+            Assert.That(outcome.Result, Is.EqualTo(Status.Failed),
                 "Fail of BeforeTest by suite timeout should fail suite");
-            
-            Assert.That(outcome.SkippedTests, Is.EqualTo(2), 
+
+            Assert.That(outcome.SkippedTests, Is.EqualTo(2),
                 "All tests should be sklipped on suite timeout during first BeforeTest");
         }
 
@@ -60,16 +60,16 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             Config.SuiteTimeout = TimeSpan.FromMilliseconds(USuiteForTimeouts4.Timeout * 2.5);
             var outcome = RunTestSuite();
 
-            Assert.That(outcome.Result, Is.EqualTo(Status.Failed), 
+            Assert.That(outcome.Result, Is.EqualTo(Status.Failed),
                 "Fail of Test by suite timeout should fail suite");
-            
-            Assert.That(outcome.FailedTests, Is.EqualTo(1), 
+
+            Assert.That(outcome.FailedTests, Is.EqualTo(1),
                 "Current test at suite timeout should be failed");
 
             Assert.That(outcome.TestsOutcomes[0].FailMessage, Is.EqualTo("Suite timeout (00:00:00.6250000) reached"),
                 "Outcome of test interrupted by suite timeout does not have right exception");
 
-            Assert.That(outcome.SkippedTests, Is.EqualTo(1), 
+            Assert.That(outcome.SkippedTests, Is.EqualTo(1),
                 "Not executed tests after suite timeout should be skipped");
         }
 
@@ -93,7 +93,7 @@ namespace Unicorn.UnitTests.Tests.Core.Testing
             runner.RunTests();
 
             return runner.Outcome.SuitesOutcomes
-                .First(o => o.Name.Equals("Suite for timeouts 4", 
+                .First(o => o.Name.Equals("Suite for timeouts 4",
                 StringComparison.InvariantCultureIgnoreCase));
         }
     }

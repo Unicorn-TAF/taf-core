@@ -34,7 +34,7 @@ namespace Unicorn.Taf.Core.Utility.Synchronization
             expirationDateTime = DateTime.Now.Add(delay);
             return this;
         }
-            
+
         /// <summary>
         /// Starts wait timer
         /// </summary>

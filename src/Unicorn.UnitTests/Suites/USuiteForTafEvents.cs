@@ -26,7 +26,7 @@ namespace Unicorn.UnitTests.Suites
             {
                 throw new TestTimeoutException();
             }
-            
+
             Output.Add("BeforeSuite");
         }
 

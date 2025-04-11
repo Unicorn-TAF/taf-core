@@ -17,10 +17,10 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
             {
                 new Retrier(2)
                     .OnExceptions(typeof(ArgumentException))
-                    .Execute(() => 
-                    { 
-                        attempts++; 
-                        throw new ArgumentException("expected"); 
+                    .Execute(() =>
+                    {
+                        attempts++;
+                        throw new ArgumentException("expected");
                     });
             }
             catch (ArgumentException)
@@ -37,10 +37,10 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
             try
             {
                 new Retrier(2)
-                    .Execute(() => 
-                    { 
-                        attempts++; 
-                        throw new AggregateException("expected"); 
+                    .Execute(() =>
+                    {
+                        attempts++;
+                        throw new AggregateException("expected");
                     });
             }
             catch (AggregateException)
@@ -117,10 +117,10 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
             {
                 new Retrier(4)
                     .OnExceptions(typeof(NullReferenceException))
-                    .Execute(() => 
-                    { 
-                        attempts++; 
-                        throw new ArgumentException("expected"); 
+                    .Execute(() =>
+                    {
+                        attempts++;
+                        throw new ArgumentException("expected");
                     });
             }
             catch (ArgumentException)

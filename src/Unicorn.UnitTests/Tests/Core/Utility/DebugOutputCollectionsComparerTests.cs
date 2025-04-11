@@ -72,12 +72,12 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
 
         //[Test] // Need to debug output
         public void SequenceEqualTo() =>
-            Verify.Assert.That(StringsCollection(2, 7), 
+            Verify.Assert.That(StringsCollection(2, 7),
                 Collection.IsSequenceEqualTo(StringsCollection(2, 9)));
 
         //[Test] // Need to debug output
         public void IsTheSameAs() =>
-            Verify.Assert.That(new[] { 1, 2, 3, 4 }, 
+            Verify.Assert.That(new[] { 1, 2, 3, 4 },
                 Collection.IsTheSameAs(new[] { 1, 2, 5, 4, 6 }));
 
         //[Test] // Need to debug output
@@ -89,7 +89,7 @@ namespace Unicorn.UnitTests.Tests.Core.Utility
         public void NotContains() =>
             Verify.Assert.That(StringsCollection(2, 5),
                 Verify.Matchers.Is.Not(Collection.HasItems(StringsCollection(1, 6))));
-        
+
         private static IEnumerable<string> StringsCollection(int from, int to) =>
             Enumerable.Range(from, to - from + 1).Select(i => "string" + i);
 

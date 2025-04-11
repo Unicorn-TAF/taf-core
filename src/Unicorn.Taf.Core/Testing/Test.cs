@@ -75,10 +75,10 @@ namespace Unicorn.Taf.Core.Testing
             ULog.Info("-------- Test '{0}'", Outcome.Title);
 
             TafEvents.CallOnTestStart(this);
-                
+
             Outcome.StartTime = DateTime.Now;
             TestTimer = Stopwatch.StartNew();
-            
+
             RunTestMethod(suiteInstance);
 
             TestTimer.Stop();
@@ -105,7 +105,7 @@ namespace Unicorn.Taf.Core.Testing
         {
             try
             {
-                var testTask = Task.Run(() => 
+                var testTask = Task.Run(() =>
                 {
                     TestMethod.Invoke(testSuite.SuiteInstance, _dataSet?.Parameters.ToArray());
                 });
