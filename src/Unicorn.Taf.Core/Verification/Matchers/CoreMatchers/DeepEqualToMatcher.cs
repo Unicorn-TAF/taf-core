@@ -22,6 +22,13 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
             _objectToCompare = objectToCompare;
         }
 
+        /// <summary>
+        /// Adds paths to fields/properties to ignore during comparison. 
+        /// Field or property which path ends with one of ignore paths will be skipped during comparison.
+        /// Example: SomeObject.SomeField.SomeInnerField
+        /// </summary>
+        /// <param name="pathsToIgnore">list of paths to fields/properties to be ignored</param>
+        /// <returns></returns>
         public DeepEqualToMatcher<T> IgnoringPaths(params string[] pathsToIgnore)
         {
             this.pathsToIgnore = pathsToIgnore;

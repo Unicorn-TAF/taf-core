@@ -29,7 +29,7 @@ namespace Unicorn.Taf.Core.Utility
         /// Field or property which path ends with one of ignore paths will be skipped during comparison.
         /// Example: SomeObject.SomeField.SomeInnerField
         /// </summary>
-        /// <param name="ignorePaths"></param>
+        /// <param name="ignorePaths">list of paths to fields/properties to be ignored</param>
         /// <returns></returns>
         public DeepObjectsComparer IgnorePaths(params string[] ignorePaths)
         {
