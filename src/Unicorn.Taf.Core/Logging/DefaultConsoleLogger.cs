@@ -32,7 +32,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Error(string message, params object[] parameters) =>
-            Log(ErrorPrefix, message, parameters);
+            Log("\x1b[31m", ErrorPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with warning level.
@@ -40,7 +40,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Warn(string message, params object[] parameters) =>
-            Log(WarningPrefix, message, parameters);
+            Log("\x1b[33m", WarningPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with informational level.
@@ -48,7 +48,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Info(string message, params object[] parameters) =>
-            Log(InfoPrefix, message, parameters);
+            Log("\x1b[32m", InfoPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with debug level.
@@ -56,7 +56,7 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Debug(string message, params object[] parameters) =>
-            Log(DebugPrefix, message, parameters);
+            Log("\x1b[36m", DebugPrefix, message, parameters);
 
         /// <summary>
         /// Logs message with trace level.
@@ -64,11 +64,12 @@ namespace Unicorn.Taf.Core.Logging
         /// <param name="message">message to log</param>
         /// <param name="parameters">parameters to substitute to message template</param>
         public void Trace(string message, params object[] parameters) =>
-            Log(TracePrefix, message, parameters);
+            Log("\x1b[90m", TracePrefix, message, parameters);
 
-        private void Log(string prefix, string message, object[] parameters)
+        private void Log(string color, string prefix, string message, object[] parameters)
         {
             string timestamp = DateTime.Now.ToString(DtFormat, CultureInfo.InvariantCulture);
+            Console.Write(color);
 
             if (parameters.Length == 0)
             {
@@ -78,6 +79,8 @@ namespace Unicorn.Taf.Core.Logging
             {
                 Console.WriteLine($"{timestamp} {prefix}{string.Format(message, parameters)}");
             }
+
+            Console.Write("\x1b[0m");
         }
     }
 }
