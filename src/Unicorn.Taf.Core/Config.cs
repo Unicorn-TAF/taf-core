@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Unicorn.Taf.Core.Internal;
 
 namespace Unicorn.Taf.Core
 {
@@ -59,7 +60,6 @@ namespace Unicorn.Taf.Core
         /// <summary>
         /// Order of declaration in test suite class.
         /// </summary>
-        /// 
         Declaration,
 
         /// <summary>
@@ -80,6 +80,7 @@ namespace Unicorn.Taf.Core
         static Config()
         {
             Reset();
+            MergeWithEnvironmentVariables();
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Unicorn.Taf.Core
         public static TimeSpan SuiteTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets method of parallelization of tests 
+        /// Gets or sets method of parallelization of tests
         /// (default: <see cref="Parallelization.None"/>).
         /// </summary>
         public static Parallelization ParallelBy { get; set; }
@@ -104,13 +105,13 @@ namespace Unicorn.Taf.Core
         public static int Threads { get; set; }
 
         /// <summary>
-        /// Gets or sets behavior of dependent tests if main test is failed 
+        /// Gets or sets behavior of dependent tests if main test is failed
         /// (default: <see cref="TestsDependency.Run"/>).
         /// </summary>
         public static TestsDependency DependentTests { get; set; }
 
         /// <summary>
-        /// Gets or sets order of tests execution in term of test suite 
+        /// Gets or sets order of tests execution in term of test suite
         /// (default: <see cref="TestsOrder.Declaration"/>).
         /// </summary>
         public static TestsOrder TestsExecutionOrder { get; set; }
@@ -185,18 +186,18 @@ namespace Unicorn.Taf.Core
                 throw new FileNotFoundException("Unicorn configuration file not found.", configPath);
             }
 
-            JsonConfig conf;
+            UnicornConfigDto conf;
 
             var serializerSettings = new DataContractJsonSerializerSettings()
             {
                 UseSimpleDictionaryFormat = true
             };
 
-            var serializer = new DataContractJsonSerializer(typeof(JsonConfig), serializerSettings);
+            var serializer = new DataContractJsonSerializer(typeof(UnicornConfigDto), serializerSettings);
 
             using (FileStream fs = new FileStream(configPath, FileMode.Open))
             {
-                conf = serializer.ReadObject(fs) as JsonConfig;
+                conf = serializer.ReadObject(fs) as UnicornConfigDto;
             }
 
             Reset();
@@ -215,7 +216,7 @@ namespace Unicorn.Taf.Core
             {
                 // Replace is for backward combpatibility.
                 string parallelString = conf.JsonParallelBy.ToLowerInvariant().Replace("assembly", "none");
-                ParallelBy = GetEnumValue<Parallelization>(parallelString);
+                ParallelBy = ConversionUtils.GetEnumValue<Parallelization>(parallelString);
             }
 
             if (conf.JsonThreads != 0)
@@ -225,12 +226,12 @@ namespace Unicorn.Taf.Core
 
             if (conf.JsonTestsDependency != null)
             {
-                DependentTests = GetEnumValue<TestsDependency>(conf.JsonTestsDependency);
+                DependentTests = ConversionUtils.GetEnumValue<TestsDependency>(conf.JsonTestsDependency);
             }
 
             if (conf.JsonTestsExecutionOrder != null)
             {
-                TestsExecutionOrder = GetEnumValue<TestsOrder>(conf.JsonTestsExecutionOrder);
+                TestsExecutionOrder = ConversionUtils.GetEnumValue<TestsOrder>(conf.JsonTestsExecutionOrder);
             }
 
             if (conf.JsonRunTags != null)
@@ -249,6 +250,8 @@ namespace Unicorn.Taf.Core
             }
 
             userDefinedSettings = conf.JsonUserDefinedSettings;
+
+            MergeWithEnvironmentVariables();
         }
 
         /// <summary>
@@ -300,52 +303,35 @@ namespace Unicorn.Taf.Core
             userDefinedSettings[setting] :
             throw new KeyNotFoundException($"User defined setting '{setting}' does not exist in config");
 
-        private static T GetEnumValue<T>(string jsonValue)
+        private static void MergeWithEnvironmentVariables()
         {
-            try
+            if (Environment.GetEnvironmentVariable("UNICORN_TEST_TIMEOUT") is string testTimeout
+                && double.TryParse(testTimeout, out double testTimeoutMins))
             {
-                return (T)Enum.Parse(typeof(T), jsonValue, true);
+                TestTimeout = TimeSpan.FromMinutes(testTimeoutMins);
             }
-            catch
+
+            if (Environment.GetEnvironmentVariable("UNICORN_SUITE_TIMEOUT") is string suiteTimeout
+                && double.TryParse(suiteTimeout, out double suiteTimeoutMins))
             {
-                throw new ArgumentException(
-                    $"{typeof(T)} is not defined. Available values are: " +
-                    string.Join(",", Enum.GetValues(typeof(T)).Cast<T>()));
+                SuiteTimeout = TimeSpan.FromMinutes(suiteTimeoutMins);
             }
-        }
 
-        [DataContract]
-        private class JsonConfig
-        {
-            [DataMember(Name = "testTimeout", IsRequired = false)]
-            internal int JsonTestTimeout { get; set; }
+            if (Environment.GetEnvironmentVariable("UNICORN_PARALLEL_BY") is string parallelBy)
+            {
+                ParallelBy = ConversionUtils.GetEnumValue<Parallelization>(parallelBy);
+            }
 
-            [DataMember(Name = "suiteTimeout", IsRequired = false)]
-            internal int JsonSuiteTimeout { get; set; }
+            if (Environment.GetEnvironmentVariable("UNICORN_THREADS") is string threads
+                && int.TryParse(threads, out int threadsValue))
+            {
+                Threads = threadsValue;
+            }
 
-            [DataMember(Name = "parallel", IsRequired = false)]
-            internal string JsonParallelBy { get; set; }
-
-            [DataMember(Name = "threads", IsRequired = false)]
-            internal int JsonThreads { get; set; }
-
-            [DataMember(Name = "testsDependency", IsRequired = false)]
-            internal string JsonTestsDependency { get; set; }
-
-            [DataMember(Name = "testsOrder", IsRequired = false)]
-            internal string JsonTestsExecutionOrder { get; set; }
-
-            [DataMember(Name = "tags", IsRequired = false)]
-            internal string[] JsonRunTags { get; set; }
-
-            [DataMember(Name = "categories", IsRequired = false)]
-            internal string[] JsonRunCategories { get; set; }
-
-            [DataMember(Name = "tests", IsRequired = false)]
-            internal string[] JsonRunTests { get; set; }
-
-            [DataMember(Name = "userDefined", IsRequired = false)]
-            internal Dictionary<string, string> JsonUserDefinedSettings { get; set; }
+            if (Environment.GetEnvironmentVariable("UNICORN_TESTS_DEPENDENCY") is string testsDependency)
+            {
+                DependentTests = ConversionUtils.GetEnumValue<TestsDependency>(testsDependency);
+            }
         }
     }
 }
