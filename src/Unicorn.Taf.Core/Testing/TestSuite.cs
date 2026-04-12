@@ -37,7 +37,7 @@ namespace Unicorn.Taf.Core.Testing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TestSuite"/> class.<br/>
-        /// On Initialize the list of Tests, BeforeTests, AfterTests, BeforeSuites and AfterSuites 
+        /// On Initialize the list of Tests, BeforeTests, AfterTests, BeforeSuites and AfterSuites
         /// is retrieved from the instance.<br/>
         /// For each test is performed check for skip
         /// </summary>
@@ -125,7 +125,7 @@ namespace Unicorn.Taf.Core.Testing
             TafEvents.CallOnSuiteStart(this);
             ExecutionTimer = Stopwatch.StartNew();
 
-            if (RunSuiteMethods(_beforeSuites))
+            if (RunSuiteMethods(_beforeSuites, out string beforeSuiteError))
             {
                 Array.ForEach(_tests, t => ProcessTest(t));
 
@@ -134,10 +134,10 @@ namespace Unicorn.Taf.Core.Testing
             }
             else
             {
-                Skip("BeforeSuite was failed.");
+                Skip("BeforeSuite was failed. Error: " + beforeSuiteError);
             }
 
-            RunSuiteMethods(_afterSuites);
+            RunSuiteMethods(_afterSuites, out string afterSuiteError);
 
             ExecutionTimer.Stop();
             Outcome.ExecutionTime = ExecutionTimer.Elapsed;
@@ -202,9 +202,9 @@ namespace Unicorn.Taf.Core.Testing
                 test.Skip("Suite execution time reached timeout " + Config.SuiteTimeout);
             }
             // If no need to skip all tests and suite timeout not reached run before tests
-            else if (!RunSuiteMethods(_beforeTests))
+            else if (!RunSuiteMethods(_beforeTests, out string beforeTestError))
             {
-                test.Skip("BeforeTest was failed");
+                test.Skip("BeforeTest was failed. Error: " + beforeTestError);
             }
             else
             {
@@ -226,7 +226,7 @@ namespace Unicorn.Taf.Core.Testing
         /// </summary>
         /// <param name="suiteMethods">array of suite methods to run</param>
         /// <returns>true if after suites run successfully; fail if at least one after suite failed</returns>
-        private bool RunSuiteMethods(SuiteMethod[] suiteMethods)
+        private bool RunSuiteMethods(SuiteMethod[] suiteMethods, out string error)
         {
             foreach (var suiteMethod in suiteMethods)
             {
@@ -235,10 +235,12 @@ namespace Unicorn.Taf.Core.Testing
                 if (suiteMethod.Outcome.Result == Status.Failed)
                 {
                     Outcome.Result = Status.Failed;
+                    error = suiteMethod.Outcome.FailMessage;
                     return false;
                 }
             }
 
+            error = null;
             return true;
         }
 
@@ -267,7 +269,7 @@ namespace Unicorn.Taf.Core.Testing
                 if (suiteMethod.Outcome.Result == Status.Failed)
                 {
                     Outcome.Result = Status.Failed;
-                    //TODO: parallelization is not implemented yet. 
+                    //TODO: parallelization is not implemented yet.
                     //// && Config.ParallelBy != Parallelization.Test;
                     skipTests = attribute.SkipTestsOnFail;
                 }
