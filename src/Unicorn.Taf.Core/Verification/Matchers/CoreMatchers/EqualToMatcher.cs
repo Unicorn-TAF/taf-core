@@ -3,7 +3,7 @@
 namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
 {
     /// <summary>
-    /// Matcher to check if object is equal to expected one. 
+    /// Matcher to check if object is equal to expected one.
     /// </summary>
     /// <typeparam name="T">check items type</typeparam>
     public class EqualToMatcher<T> : TypeSafeMatcher<T>
@@ -40,7 +40,7 @@ namespace Unicorn.Taf.Core.Verification.Matchers.CoreMatchers
             // Enhanced outputs for strings
             if (actual is string && !Reverse)
             {
-                string diff = MatchersUtils.GetStringsDiff(actual.ToString(), _objectToCompare.ToString());
+                string diff = MatchersUtils.GetStringsDiff(_objectToCompare.ToString(), actual.ToString());
                 DescribeMismatch(Environment.NewLine + diff);
             }
             else
